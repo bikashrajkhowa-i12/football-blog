@@ -1,11 +1,29 @@
-import "./App.css";
+import { Routes, Route, Navigate } from "react-router-dom";
 
-function App() {
+import "./App.css";
+import LandingPage from "./pages/LandingPage";
+import Footer from "./components/Footer";
+import Navbar from "./components/Navbar";
+
+const App = () => {
   return (
-    <div>
-      <h1>This is the site</h1>
+    <div className="h-screen flex flex-col">
+      <Navbar />
+
+      {/* Main content, offset for fixed navbar */}
+      <main className="flex-1 pt-10">
+        <div className="mx-auto max-w-5xl pt-20 py-3 px-4 h-full">
+          <Routes>
+            <Route path="/" element={<Navigate to="/home" replace />} />
+            <Route path="/home" element={<LandingPage />} />
+          </Routes>
+        </div>
+      </main>
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
-}
+};
 
 export default App;
