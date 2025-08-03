@@ -4,12 +4,20 @@ import "./App.css";
 import LandingPage from "./pages/LandingPage";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
+import { useState } from "react";
+import Modal from "./components/Modal";
 
 const App = () => {
+  const [showModel, setShowModal] = useState(false);
+
   return (
     <div className="h-screen flex flex-col">
-      <Navbar />
-
+      <Navbar onSignUpClick={() => setShowModal(true)} />
+      {showModel && (
+        <Modal isOpen={showModel} onClose={() => setShowModal(false)}>
+          {/**Log in/ sign up form */}Name: Temp Temp
+        </Modal>
+      )}
       {/* Main content, offset for fixed navbar */}
       <main className="flex-1 pt-10">
         <div className="mx-auto max-w-5xl pt-20 py-3 px-4 h-full">

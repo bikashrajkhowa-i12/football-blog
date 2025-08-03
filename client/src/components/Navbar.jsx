@@ -2,11 +2,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "./Button";
 
-const Navbar = () => {
+const Navbar = (props) => {
+  const { onSignUpClick = {} } = props || {};
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
-  const handleOptionClick = () => {
+  const onClickNavLink = () => {
     setIsOpen(false);
   };
 
@@ -14,16 +15,16 @@ const Navbar = () => {
     const className = "hover:text-green-700 active:text-green-800 text-sm";
     return (
       <>
-        <a href="##" className={className} onClick={handleOptionClick}>
+        <a href="##" className={className} onClick={onClickNavLink}>
           Home
         </a>
-        <a href="##" className={className} onClick={handleOptionClick}>
+        <a href="##" className={className} onClick={onClickNavLink}>
           Latest
         </a>
-        <a href="##" className={className} onClick={handleOptionClick}>
+        <a href="##" className={className} onClick={onClickNavLink}>
           Fixtures
         </a>
-        <a href="##" className={className} onClick={handleOptionClick}>
+        <a href="##" className={className} onClick={onClickNavLink}>
           Teams
         </a>
       </>
@@ -45,15 +46,11 @@ const Navbar = () => {
           <div className="hidden md:flex gap-6 items-center">{navLinks()}</div>
 
           <div className="hidden md:flex flex-col items-center mt-4">
-            <Button
-              text="Sign Up"
-              onClick={() => {
-                handleOptionClick();
-              }}
-            />
+            <Button text="Sign Up" onClick={onSignUpClick} />
             <a
               href="##"
               className="text-sky-700 hover:text-green-700 active:text-green-800 text-sm"
+              onClick={onSignUpClick}
             >
               Already have an account?
             </a>
@@ -79,13 +76,17 @@ const Navbar = () => {
             <Button
               text="Sign Up"
               className="ml-4"
-              onClick={handleOptionClick}
+              onClick={() => {
+                setIsOpen(false);
+                onSignUpClick();
+              }}
             />
             <a
               href="##"
               className="text-sky-600 active:text-green-800 text-sm"
               onClick={() => {
-                handleOptionClick();
+                setIsOpen(false);
+                onSignUpClick();
               }}
             >
               Already have an account?

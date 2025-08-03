@@ -62,9 +62,9 @@ const LandingPage = () => {
                     <div className="mt-6">
                       <i className="text-xs">Sources</i>:{" "}
                       {sources.map((source, idx) => {
-                        const [label, url] = Object.entries(source)[0] || [];
+                        const { name, url } = source || {};
                         return (
-                          label &&
+                          name &&
                           url && (
                             <span
                               key={`source-${idx}`}
@@ -76,7 +76,7 @@ const LandingPage = () => {
                                 rel="noopener noreferrer"
                                 className="text-blue-500 underline"
                               >
-                                {label}
+                                {name}
                               </a>
                               {idx < sources.length - 1 && " | "}
                             </span>
