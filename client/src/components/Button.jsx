@@ -1,7 +1,7 @@
 const Button = (props) => {
   const {
     text = "Submit",
-    onClick = {},
+    onClick = () => "",
     className = "",
     type = "button",
   } = props || {};
@@ -9,7 +9,11 @@ const Button = (props) => {
     <button
       type={type}
       onClick={onClick}
-      className={`text-xs bg-green-700 hover:bg-green-800 active:bg-green-800 text-white font-semibold py-2 px-4 rounded-lg shadow transition duration-200 ${className}`}
+      className={
+        className
+          ? `${className}`
+          : "text-sm bg-green-800 opacity-90 hover:opacity-100 active:bg-green-900 text-white font-semibold py-1 px-2 rounded-md shadow transition duration-200"
+      }
     >
       {text}
     </button>

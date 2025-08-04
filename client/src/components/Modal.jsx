@@ -7,16 +7,30 @@ const Modal = (props) => {
     return null;
   }
 
+  const handleBackdropCLick = (e) => {
+    if (e.target === e.currentTarget) onClose();
+  };
+
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6 relative mx-4 sm:w-full sm:max-w-md">
+    <div
+      className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50"
+      onClick={handleBackdropCLick}
+    >
+      <div
+        className="flex flex-col gap-5 overflow-hidden bg-white rounded-2xl shadow-xl mx-4 max-w-md w-full py-10 px-8 relative sm:w-full sm:max-w-md"
+        onClick={(e) => e.stopPropagation()}
+      >
         <Button
-          className="absolute top-2 right-2 text-gray-500 hover:text-white text-xl bg-red-500 hover:bg-red-600 active:bg-red-800 rounded-full w-8 h-8 flex items-center justify-center"
+          className="absolute top-3 right-3 text-gray-400 text-sm font-bold hover:text-gray-800 w-8 h-8 flex items-center justify-center"
           onClick={onClose}
           text="✕"
         />
-        {title && <h2 className="text-xl font-semibold mb-4">{title}</h2>}
-        <div>{children}</div>
+        <div className="flex justify-center">
+          {title && (
+            <h2 className="text-lg text-gray-700 font-bold mb-4">{title}</h2>
+          )}
+        </div>
+        <div className="p-2 w-lg">{children}</div>
       </div>
     </div>
   );

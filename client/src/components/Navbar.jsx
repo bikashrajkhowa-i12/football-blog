@@ -45,15 +45,15 @@ const Navbar = (props) => {
           {/* Desktop Nav */}
           <div className="hidden md:flex gap-6 items-center">{navLinks()}</div>
 
-          <div className="hidden md:flex flex-col items-center mt-4">
-            <Button text="Sign Up" onClick={onSignUpClick} />
-            <a
+          <div className="hidden md:flex flex-col items-center">
+            <Button text="Log In" onClick={onSignUpClick} />
+            {/* <a
               href="##"
               className="text-sky-700 hover:text-green-700 active:text-green-800 text-sm"
               onClick={onSignUpClick}
             >
               Already have an account?
-            </a>
+            </a> */}
           </div>
 
           {/* Mobile Menu Button */}
@@ -74,14 +74,13 @@ const Navbar = (props) => {
           >
             {navLinks()}
             <Button
-              text="Sign Up"
-              className="ml-4"
+              text="Log In"
               onClick={() => {
                 setIsOpen(false);
                 onSignUpClick();
               }}
             />
-            <a
+            {/* <a
               href="##"
               className="text-sky-600 active:text-green-800 text-sm"
               onClick={() => {
@@ -90,7 +89,7 @@ const Navbar = (props) => {
               }}
             >
               Already have an account?
-            </a>
+            </a> */}
           </div>
         )}
       </div>
