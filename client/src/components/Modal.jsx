@@ -1,5 +1,4 @@
 import React from "react";
-import Button from "./Button";
 
 const Modal = (props) => {
   const { isOpen, onClose, title = "Log in", children } = props || {};
