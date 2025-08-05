@@ -1,4 +1,3 @@
-import Button from "../Button";
 import FormBuilder from "../FormBuilder";
 
 const ForgotPassword = (props) => {
