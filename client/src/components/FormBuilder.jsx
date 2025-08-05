@@ -15,14 +15,15 @@ const FormBuilder = (props) => {
       required = false,
       placeholder = "",
       attributes = {},
+      className = "",
     } = field || {};
 
-    const inputElementClass = `w-full text-sm rounded-lg px-3 py-1 ring-[0.5px] ring-gray-400 focus:outline-none focus:ring-[1.5px] focus:ring-green-800 focus:opacity-50`;
+    const inputElementClass = `w-full text-sm rounded-lg px-3 py-1 ring-[0.5px] ring-gray-400 opacity-70 focus:outline-none focus:ring-[1.5px] focus:ring-green-800 focus:opacity-90 ${className}`;
     const id = field.id || field.name || `field-${idx}`;
     const labelElement = label && type !== "hidden" && (
       <label
         htmlFor={id}
-        className="w-32 break-words whitespace-normal flex-1 font-semibold text-gray-700"
+        className="w-32 break-words whitespace-normal flex-1 text-gray-700"
       >
         {label}
       </label>
@@ -31,6 +32,22 @@ const FormBuilder = (props) => {
     let inputElement;
 
     switch (type) {
+      case "checkbox":
+        inputElement = (
+          <label className="flex items-center gap-2">
+            <input
+              id={id}
+              name={id}
+              type="checkbox"
+              checked={field.checked}
+              required={required}
+              className="w-[14.5px] h-[14.5px] mt-0.5 accent-green-800 rounded cursor-pointer"
+              {...attributes}
+            />
+            <span className="text-gray-600 text-sm">{label}</span>
+          </label>
+        );
+        break;
       case "select":
         inputElement = (
           <select
@@ -97,8 +114,16 @@ const FormBuilder = (props) => {
         key={idx}
         className="flex w-full justify-between items-start gap-3 text-sm sm:text-base"
       >
-        {label && <div className="flex items-center w-20">{labelElement}</div>}
-        {<div className="flex items-center w-full">{inputElement}</div>}
+        {type === "checkbox" ? (
+          <div className="flex items-center w-50">{inputElement}</div>
+        ) : (
+          <>
+            {label && (
+              <div className="flex items-center w-20">{labelElement}</div>
+            )}
+            <div className="flex items-center w-full">{inputElement}</div>
+          </>
+        )}
       </div>
     );
   };
@@ -107,6 +132,7 @@ const FormBuilder = (props) => {
     return (
       <Button
         key={idx}
+        name={btn.name || ""}
         type={btn.type || "button"}
         onClick={btn.onClick}
         className={btn.className}
@@ -128,7 +154,7 @@ const FormBuilder = (props) => {
           : undefined
       }
     >
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-6">
         {fields.length > 0 ? fields.map(renderField) : ""}
       </div>
       <div className="flex gap-3">

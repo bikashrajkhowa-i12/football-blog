@@ -112,7 +112,7 @@ const LandingPage = () => {
         <section className="flex-1">{displayContent()}</section>
 
         {/* Sidebar */}
-        <aside className="hidden md:block w-[200px]">
+        <aside className="hidden lg:block w-[200px]">
           {/* {displayLeftAside()} */}
         </aside>
       </div>

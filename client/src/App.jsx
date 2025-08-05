@@ -12,7 +12,7 @@ const App = () => {
   const [showModel, setShowModal] = useState(false);
 
   return (
-    <div className="h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col">
       <Navbar onSignUpClick={() => setShowModal(true)} />
       {showModel && (
         <AuthModal isOpen={showModel} onClose={() => setShowModal(false)} />

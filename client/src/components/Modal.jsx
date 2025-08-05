@@ -7,30 +7,31 @@ const Modal = (props) => {
     return null;
   }
 
-  const handleBackdropCLick = (e) => {
-    if (e.target === e.currentTarget) onClose();
-  };
-
   return (
-    <div
-      className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50"
-      onClick={handleBackdropCLick}
-    >
+    <div className="fixed inset-0 z-50 bg-black bg-opacity-60 overflow-y-auto">
       <div
-        className="flex flex-col gap-5 overflow-hidden bg-white rounded-2xl shadow-xl mx-4 max-w-md w-full py-10 px-8 relative sm:w-full sm:max-w-md"
-        onClick={(e) => e.stopPropagation()}
+        className="min-h-screen flex items-center justify-center px-4"
+        onClick={() => onClose()} // onClick on this backdrop component, it closes the model!
       >
-        <Button
-          className="absolute top-3 right-3 text-gray-400 text-sm font-bold hover:text-gray-800 w-8 h-8 flex items-center justify-center"
-          onClick={onClose}
-          text="✕"
-        />
-        <div className="flex justify-center">
+        <div
+          className="bg-gray-200 rounded-2xl shadow-xl w-full max-w-md p-8 mx-2 my-8 relative"
+          onClick={(e) => e.stopPropagation()} // prevents the onClick() functionality of its parent component in the child component
+        >
+          <button
+            className="absolute top-3 right-3 text-gray-400 text-sm font-bold hover:text-gray-800 w-8 h-8 flex items-center justify-center"
+            onClick={onClose}
+          >
+            ✕
+          </button>
+
           {title && (
-            <h2 className="text-lg text-gray-700 font-bold mb-4">{title}</h2>
+            <h2 className="text-center text-lg font-bold text-gray-700 mb-6">
+              {title}
+            </h2>
           )}
+
+          <div className="p-4 mb-6 w-full">{children}</div>
         </div>
-        <div className="p-2 w-lg">{children}</div>
       </div>
     </div>
   );
