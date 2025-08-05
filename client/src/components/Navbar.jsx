@@ -30,6 +30,7 @@ const Navbar = (props) => {
       </>
     );
   };
+
   return (
     <header className="fixed top-0 left-0 w-full z-50 shadow bg-white">
       <div className="max-w-6xl mx-auto px-8">
@@ -47,13 +48,6 @@ const Navbar = (props) => {
 
           <div className="hidden md:flex flex-col items-center">
             <Button text="Log In" onClick={onSignUpClick} />
-            {/* <a
-              href="##"
-              className="text-sky-700 hover:text-green-700 active:text-green-800 text-sm"
-              onClick={onSignUpClick}
-            >
-              Already have an account?
-            </a> */}
           </div>
 
           {/* Mobile Menu Button */}
@@ -71,6 +65,7 @@ const Navbar = (props) => {
             className={`md:hidden flex flex-col gap-4 px-4 overflow-hidden ${
               isOpen ? "max-h-96 opacity-100 py-4" : "max-h-0 opacity-0 py-0"
             }`}
+            // onClick={(e) => e.stopPropagation()} // TODO: to wrap with a backdrop wrapper and onClick parent > closes the dropdown
           >
             {navLinks()}
             <Button
@@ -80,16 +75,6 @@ const Navbar = (props) => {
                 onSignUpClick();
               }}
             />
-            {/* <a
-              href="##"
-              className="text-sky-600 active:text-green-800 text-sm"
-              onClick={() => {
-                setIsOpen(false);
-                onSignUpClick();
-              }}
-            >
-              Already have an account?
-            </a> */}
           </div>
         )}
       </div>

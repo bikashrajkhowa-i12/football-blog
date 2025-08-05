@@ -1,27 +1,39 @@
-import React from "react";
+import { useState } from "react";
+
 import Modal from "../Modal";
-import LoginForm from "./LoginForm";
 import { APP_CONFIG } from "../../utils/config";
-import Button from "../Button";
+
+import Login from "./Login";
+import Signup from "./Signup";
+import ForgotPassword from "./ForgotPassword";
 
 const AuthModal = (props) => {
   const { isOpen, onClose } = props || {};
+  const [authView, setAuthView] = useState("login"); // flows: "login", "signup", "forgot_password"
+  const onSwitchView = (view) => setAuthView(view);
+  const config = APP_CONFIG.auth[authView] || {};
+
+  const COMPONENTS = {
+    login: Login,
+    signup: Signup,
+    forgot_password: ForgotPassword,
+  };
+  const DisplayComp = COMPONENTS[authView];
+
+  const displayPrompt = () => {
+    return (
+      config.prompt && (
+        <p className="text-sm text-gray-600 mb-4 text-center">
+          {config.prompt}
+        </p>
+      )
+    );
+  };
+
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={onClose}
-      title={`Login to ${APP_CONFIG.app_name}`}
-    >
-      <div className="flex flex-col w-full gap-6">
-        <LoginForm />
-        <p className="w-full text-center text-gray-600">Or</p>
-        <Button
-          text={"Login with Google"}
-          name="google"
-          onClick={() => ""}
-          className="w-full bg-white opacity-80 hover:bg-gray-300 active:bg-gray-300 rounded-xl text-md"
-        />
-      </div>
+    <Modal isOpen={isOpen} onClose={onClose} title={config?.title}>
+      {displayPrompt()}
+      <DisplayComp authView={authView} onSwitchView={onSwitchView} />
     </Modal>
   );
 };

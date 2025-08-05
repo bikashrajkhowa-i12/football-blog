@@ -18,7 +18,8 @@ const FormBuilder = (props) => {
       className = "",
     } = field || {};
 
-    const inputElementClass = `w-full text-sm rounded-lg px-3 py-1 ring-[0.5px] ring-gray-400 opacity-70 focus:outline-none focus:ring-[1.5px] focus:ring-green-800 focus:opacity-90 ${className}`;
+    const inputElementClass = `w-full text-sm rounded-md px-3 py-2 ring-[0.3px] ring-gray-400 opacity-70 
+      focus:outline-none focus:ring-[2px] focus:ring-gray-400 focus:opacity-90 placeholder-opacity-100 placeholder-gray-500 ${className}`;
     const id = field.id || field.name || `field-${idx}`;
     const labelElement = label && type !== "hidden" && (
       <label
@@ -39,7 +40,9 @@ const FormBuilder = (props) => {
               id={id}
               name={id}
               type="checkbox"
-              checked={field.checked}
+              checked={field.controlled ? field.checked : undefined}
+              defaultChecked={!field.controlled ? field.checked : undefined}
+              onChange={field.controlled ? field.onChange : undefined}
               required={required}
               className="w-[14.5px] h-[14.5px] mt-0.5 accent-green-800 rounded cursor-pointer"
               {...attributes}
@@ -53,6 +56,9 @@ const FormBuilder = (props) => {
           <select
             id={id}
             name={id}
+            value={field.controlled ? field.value : undefined}
+            defaultValue={!field.controlled ? field.value : undefined}
+            onChange={field.controlled ? field.onChange : undefined}
             required={required}
             className={inputElementClass}
             {...attributes}
@@ -74,6 +80,9 @@ const FormBuilder = (props) => {
           <textarea
             id={id}
             name={id}
+            value={field.controlled ? field.value : undefined}
+            defaultValue={!field.controlled ? field.value : undefined}
+            onChange={field.controlled ? field.onChange : undefined}
             required={required}
             placeholder={placeholder}
             className={inputElementClass}
@@ -88,7 +97,9 @@ const FormBuilder = (props) => {
             type={type}
             id={id}
             name={id}
-            value={field.value || ""}
+            value={field.controlled ? field.value : undefined}
+            defaultValue={!field.controlled ? field.value : undefined}
+            onChange={field.controlled ? field.onChange : undefined}
             {...attributes}
           />
         );
@@ -100,6 +111,9 @@ const FormBuilder = (props) => {
             id={id}
             name={id}
             type={type}
+            value={field.controlled ? field.value : undefined}
+            defaultValue={!field.controlled ? field.value : undefined}
+            onChange={field.controlled ? field.onChange : undefined}
             required={required}
             placeholder={placeholder}
             className={inputElementClass}
@@ -142,7 +156,7 @@ const FormBuilder = (props) => {
   };
   return (
     <form
-      className="flex flex-col gap-5"
+      className="flex flex-col gap-4"
       ref={ref}
       onSubmit={
         !ref
@@ -154,7 +168,7 @@ const FormBuilder = (props) => {
           : undefined
       }
     >
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-3">
         {fields.length > 0 ? fields.map(renderField) : ""}
       </div>
       <div className="flex gap-3">
