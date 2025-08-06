@@ -1,11 +1,13 @@
 const Divider = (props) => {
   const { text } = props || {};
-  return (
+  return text ? (
     <div className="flex items-center">
-      <hr className="flex-grow border-gray-300" />
-      {text && <span className="px-2 text-gray-500 text-sm">{text}</span>}
-      <hr className="flex-grow border-gray-300" />
+      <hr className="flex-grow border-gray-400" />
+      <span className="px-2 text-gray-500 text-sm">{text}</span>
+      <hr className="flex-grow border-gray-400" />
     </div>
+  ) : (
+    <hr className="flex-grow border-gray-400" />
   );
 };
 

@@ -4,8 +4,8 @@ export const blogs = [
       $oid: "688e801e227a2b020afb9fa3",
     },
     title:
-      "When Talent Travels: Bundesliga Stars Who Flopped in the Premier League",
-    slug: "when-talent-travels-bundesliga-stars-who-flopped-in-the-pre-9NKlEkckri",
+      "When Talent Travels: Bundesliga Stars Who Flopped in the Premier League When Talent Travels: Bundesliga Stars Who Flopped in the Premier League When Talent Travels: Bundesliga Stars Who Flopped in the Premier League",
+    slug: "when-talent-travels-bundesliga-stars-who-flopped-in-the-pre",
     leagues: [],
     countries: [],
     tournaments: [],

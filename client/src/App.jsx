@@ -20,8 +20,8 @@ const App = () => {
       />
 
       {/* Main content, offset for fixed navbar */}
-      <main className="flex-1 pt-10">
-        <div className="mx-auto max-w-6xl pt-20 py-3 px-4 h-full">
+      <main className="flex-1 pt-20">
+        <div className="mx-auto max-w-6xl pb-3 px-4 h-full">
           <Routes>
             <Route path="/" element={<Navigate to="/home" replace />} />
             <Route path="/home" element={<LandingPage />} />

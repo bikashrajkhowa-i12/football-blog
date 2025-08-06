@@ -1,10 +1,11 @@
 import React from "react";
 import { startCase } from "lodash";
 import { blogs } from "../demo/data";
+import Divider from "../components/Divider";
 
 const LandingPage = () => {
   const displayLeftAside = () => {
-    if (blogs.length <= 0) return {};
+    if (blogs.length <= 0) return null;
     return (
       <div className="flex flex-col justify-start mt-6">
         <h2 className="text-sm font-semibold px-4 py-0.5 rounded bg-red-700 text-white">
@@ -13,7 +14,7 @@ const LandingPage = () => {
         <ul className="px-4 mt-4 space-y-2 text-sm">
           {blogs.map((blog, index) => (
             <li key={`sidebar-${index}`} className="flex items-center gap-2">
-              {blog.title}
+              <span className="truncate block max-w-[150px]">{blog.title}</span>
               <span className="bg-red-700 text-white text-xs px-2 py-0.5 rounded-full">
                 New
               </span>
@@ -25,7 +26,7 @@ const LandingPage = () => {
   };
 
   const displaySources = (sources) => {
-    if (sources.length <= 0) return {};
+    if (sources.length <= 0) return null;
     return (
       <div className="mt-6">
         <i className="text-xs">Sources</i>:{" "}
@@ -65,12 +66,17 @@ const LandingPage = () => {
           } = blog || {};
 
           return (
-            <article key={`article-${index}`} className="flex mb-12">
-              <div className="w-3 h-14 bg-red-500 mt-6" />
+            <article key={`article-${index}`} className="mb-12 pt-5">
               <div className="prose max-w-none w-full px-4 text-sm">
-                <h1 className="pt-5 text-gray-700 font-bold text-xl">
-                  {title}
-                </h1>
+                <div className="flex gap-2 items-stretch">
+                  <div className="w-1.5 bg-red-500" />
+                  <div className="flex-1">
+                    <h1 className="text-gray-700 font-bold text-xl break-words">
+                      {title}
+                    </h1>
+                  </div>
+                </div>
+
                 <div className="flex flex-col items-left gap-0 text-sm text-gray-500">
                   <span>
                     Date: {published_date} • By {author} • 4 min read
@@ -92,30 +98,30 @@ const LandingPage = () => {
                 ))}
 
                 {sources.length > 0 && displaySources(sources)}
-                <div className="h-px bg-red-300 w-full my-6 mt-14" />
+                <Divider />
               </div>
             </article>
           );
         })
-      : {};
+      : null;
   };
 
   return (
-    <div className="flex flex-col">
-      <div className="flex gap-6 px-4">
-        {/* Sidebar */}
-        <aside className="hidden md:block w-[200px]">
+    <div className="flex justify-center gap-4 px-4 overflow-hidden">
+      {/* Left Sidebar (only rendered if blogs exist) */}
+      {blogs.length > 0 && (
+        <aside className="hidden md:block min-w-[150px] max-w-[150px] lg:min-w-[200px] lg:max-w-[200px]">
           {displayLeftAside()}
         </aside>
+      )}
 
-        {/* Content */}
-        <section className="flex-1">{displayContent()}</section>
-
-        {/* Sidebar */}
-        <aside className="hidden lg:block w-[200px]">
-          {/* {displayLeftAside()} */}
-        </aside>
-      </div>
+      {/* Main Section: Fixed width, centered */}
+      <section className="w-full max-w-[800px]">{displayContent()}</section>
+      <aside className="hidden md:block min-w-[150px] max-w-[150px] lg:min-w-[200px] lg:max-w-[200px]">
+        {/* todo */}
+      </aside>
+      {/* Right Sidebar (placeholder) */}
+      {/* Add this later if needed */}
     </div>
   );
 };

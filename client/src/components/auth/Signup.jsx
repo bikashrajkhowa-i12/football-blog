@@ -11,6 +11,13 @@ const Signup = (props) => {
 
   const fields = [
     {
+      type: "text",
+      // label: "E-mail",
+      name: "name",
+      required: true,
+      placeholder: "Name",
+    },
+    {
       type: "email",
       // label: "E-mail",
       name: "email",
