@@ -3,10 +3,12 @@ import { Routes, Route, Navigate } from "react-router-dom";
 
 import "./App.css";
 
-import LandingPage from "./pages/LandingPage";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import AuthModal from "./components/auth/AuthModal";
+
+import LandingPage from "./pages/LandingPage";
+import BlogPost from "./pages/BlogPost";
 
 const App = () => {
   const [showAuthModal, setShowAuthModal] = useState(false);
@@ -25,6 +27,9 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Navigate to="/home" replace />} />
             <Route path="/home" element={<LandingPage />} />
+
+            {/** route -> /blog/`${slug}-${blog_id}`  */}
+            <Route path="/blog/:slugWithId" element={<BlogPost />} />
           </Routes>
         </div>
       </main>

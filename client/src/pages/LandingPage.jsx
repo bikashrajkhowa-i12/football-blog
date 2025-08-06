@@ -25,41 +25,12 @@ const LandingPage = () => {
     );
   };
 
-  const displaySources = (sources) => {
-    if (sources.length <= 0) return null;
-    return (
-      <div className="mt-6">
-        <i className="text-xs">Sources</i>:{" "}
-        {sources.map((source, idx) => {
-          const { name, url } = source || {};
-          return (
-            name &&
-            url && (
-              <span key={`source-${idx}`} className="text-xs italic">
-                <a
-                  href={url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-500 underline"
-                >
-                  {name}
-                </a>
-                {idx < sources.length - 1 && " | "}
-              </span>
-            )
-          );
-        })}
-      </div>
-    );
-  };
-
   const displayContent = () => {
     return blogs.length
       ? blogs.map((blog, index) => {
           const {
             title = "",
             published_date = "",
-            sources = [],
             content = {},
             author = "Bkaz",
             tags = [],
@@ -97,7 +68,6 @@ const LandingPage = () => {
                   </div>
                 ))}
 
-                {sources.length > 0 && displaySources(sources)}
                 <Divider />
               </div>
             </article>
