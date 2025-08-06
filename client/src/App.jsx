@@ -9,14 +9,15 @@ import Navbar from "./components/Navbar";
 import AuthModal from "./components/auth/AuthModal";
 
 const App = () => {
-  const [showModal, setShowModal] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar onSignUpClick={() => setShowModal(true)} />
-      {showModal && (
-        <AuthModal isOpen={showModal} onClose={() => setShowModal(false)} />
-      )}
+      <Navbar showAuthModal={() => setShowAuthModal(true)} />
+      <AuthModal
+        isOpen={showAuthModal}
+        onClose={() => setShowAuthModal(false)}
+      />
 
       {/* Main content, offset for fixed navbar */}
       <main className="flex-1 pt-10">

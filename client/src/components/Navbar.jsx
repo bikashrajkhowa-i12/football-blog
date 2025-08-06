@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "./Button";
 
 const Navbar = (props) => {
-  const { onSignUpClick = {} } = props || {};
+  const { showAuthModal = {} } = props || {};
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -47,7 +47,7 @@ const Navbar = (props) => {
           <div className="hidden md:flex gap-6 items-center">{navLinks()}</div>
 
           <div className="hidden md:flex flex-col items-center">
-            <Button text="Log In" onClick={onSignUpClick} />
+            <Button text="Log In" onClick={showAuthModal} />
           </div>
 
           {/* Mobile Menu Button */}
@@ -72,7 +72,7 @@ const Navbar = (props) => {
               text="Log In"
               onClick={() => {
                 setIsOpen(false);
-                onSignUpClick();
+                showAuthModal();
               }}
             />
           </div>
