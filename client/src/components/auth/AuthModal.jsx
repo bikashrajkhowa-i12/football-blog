@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Modal from "../Modal";
 import { APP_CONFIG } from "../../utils/config";
@@ -12,6 +12,10 @@ const AuthModal = (props) => {
   const [authView, setAuthView] = useState("login"); // flows: "login", "signup", "forgot_password"
   const onSwitchView = (view) => setAuthView(view);
   const config = APP_CONFIG.auth[authView] || {};
+
+  useEffect(() => {
+    if (isOpen) onSwitchView("login"); // always start with login.
+  }, [isOpen]);
 
   const COMPONENTS = {
     login: Login,

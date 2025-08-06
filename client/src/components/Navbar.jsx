@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "./Button";
 
 const Navbar = (props) => {
-  const { showAuthModal = {} } = props || {};
+  const { showAuthModal = () => "" } = props || {};
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
