@@ -2,11 +2,12 @@ import { FcGoogle } from "react-icons/fc";
 
 const Button = (props) => {
   const {
-    text = "Submit",
+    text = "",
     name = "",
     onClick = () => "",
     className = "",
     type = "button",
+    children = [],
   } = props || {};
 
   if (name && name === "google") {
@@ -33,6 +34,7 @@ const Button = (props) => {
       }
     >
       {text}
+      {children}
     </button>
   );
 };

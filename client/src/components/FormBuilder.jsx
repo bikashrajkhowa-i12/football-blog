@@ -6,6 +6,7 @@ const FormBuilder = (props) => {
     buttons = [],
     onSubmit = () => {},
     ref = undefined,
+    formClassName = null,
   } = props || {};
 
   const renderField = (field, idx) => {
@@ -19,7 +20,7 @@ const FormBuilder = (props) => {
     } = field || {};
 
     const inputElementClass = `w-full text-sm rounded-md px-3 py-2 ring-[0.3px] ring-gray-400 opacity-70 
-      focus:outline-none focus:ring-[2px] focus:ring-gray-400 focus:opacity-90 placeholder-opacity-100 placeholder-gray-500 ${className}`;
+      focus:outline-none focus:ring-[2px] focus:opacity-90 placeholder-opacity-100 placeholder-gray-500 ${className}`;
     const id = field.id || field.name || `field-${idx}`;
     const labelElement = label && type !== "hidden" && (
       <label
@@ -156,7 +157,7 @@ const FormBuilder = (props) => {
   };
   return (
     <form
-      className="flex flex-col gap-4"
+      className={`flex flex-${formClassName || "col"} gap-4`}
       ref={ref}
       onSubmit={
         !ref

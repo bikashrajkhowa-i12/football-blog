@@ -142,7 +142,7 @@ export const blogs = [
       $oid: "688e801e227a2b020afb9fa3",
     },
     title:
-      "When Talent Travels: Bundesliga Stars Who Flopped in the Premier League",
+      "When Talent Travels: Bundesliga Stars Who Flopped in the Premier League When Talent Travels: Bundesliga Stars Who Flopped in the Premier League When Talent Travels: Bundesliga Stars Who Flopped in the Premier League ",
     slug: "when-talent-travels-bundesliga-stars-who-flopped-in-the-pre",
     leagues: [],
     countries: [],
@@ -229,10 +229,10 @@ export const blogs = [
     ],
     content_type: "markdown",
     preview:
-      "Manchester United head coach Rúben Amorim has revealed an ambitious goal—to remain at Old Trafford for the next two decades. In a rare and candid interview during United’s U.S. pre-season tour, the Portuguese manager stated that a 20-year stint is his ultimate aim. At 40, Amorim joins a club still reeling from its lowest Premier League finish in over 50 years and a Europa League final loss to Atalanta. Despite the rocky start, Amorim believes this new season marks the beginning of a long-term project aimed at restoring the club's former identity and dominance. Backed by co-owner Sir Jim Ratcliffe and key figures like Bruno Fernandes, Amorim is enforcing a culture change that could shape the next chapter of United’s story.",
+      "Rúben Amorim, who took over as Manchester United’s head coach in November 2024, has publicly stated his desire to stay at the club for 20 years. After a turbulent debut campaign, Amorim is now focusing on culture, structure, and long-term success at one of the most demanding clubs in football.",
     content: {
       summary:
-        "Rúben Amorim, who took over as Manchester United’s head coach in November 2024, has publicly stated his desire to stay at the club for 20 years. After a turbulent debut campaign, Amorim is now focusing on culture, structure, and long-term success at one of the most demanding clubs in football.",
+        "Manchester United head coach Rúben Amorim has revealed an ambitious goal—to remain at Old Trafford for the next two decades. In a rare and candid interview during United’s U.S. pre-season tour, the Portuguese manager stated that a 20-year stint is his ultimate aim. At 40, Amorim joins a club still reeling from its lowest Premier League finish in over 50 years and a Europa League final loss to Atalanta. Despite the rocky start, Amorim believes this new season marks the beginning of a long-term project aimed at restoring the club's former identity and dominance. Backed by co-owner Sir Jim Ratcliffe and key figures like Bruno Fernandes, Amorim is enforcing a culture change that could shape the next chapter of United’s story.",
       managerial_context:
         "Amorim’s statement—'I want to stay 20 years. That’s my goal'—comes as he prepares for his first full season at Manchester United. Appointed after Erik ten Hag's dismissal in late 2024, Amorim inherited a fractured team and oversaw a 15th-place league finish, the club’s lowest since 1989–90. Despite this, he remains optimistic, stating in pre-season interviews that he’s laying foundations rather than chasing short-term gains. Sir Jim Ratcliffe has voiced his support, highlighting Amorim’s discipline and clarity of vision as reasons to trust the process. Amorim also emphasized that his future depends on results, recognizing the high standards expected at United.",
       culture_reset_and_tactical_focus:
@@ -296,10 +296,11 @@ export const blogs = [
     tags: ["transfers", "bundesliga", "premier_league", "football_flops"],
     content_type: "markdown",
     preview:
-      "The Bundesliga has long been a breeding ground for elite football talent — from clinical strikers to silky midfield maestros. But success in Germany doesn’t always guarantee stardom on English soil. Over the years, a host of high-profile Bundesliga imports have crossed the channel with big expectations, only to fall short in the Premier League's fast-paced, unforgiving environment. In this piece, we take a closer look at some of the most talked-about flops — players who arrived with glowing reputations but failed to replicate their Bundesliga brilliance in England. From tactical mismatches to injury woes and cultural challenges, discover the stories behind these underwhelming transfers and what went wrong when German efficiency met Premier League chaos.",
+      "Not every big move pays off. While the Bundesliga has long been a talent factory, several of its top exports failed to replicate their form after crossing over to England. From misplaced roles to poor tactical fits, these transfers show how tricky transitions can be.",
     content: {
       summary:
-        "Not every big move pays off. While the Bundesliga has long been a talent factory, several of its top exports failed to replicate their form after crossing over to England. From misplaced roles to poor tactical fits, these transfers show how tricky transitions can be.",
+        "The Bundesliga has long been a breeding ground for elite football talent — from clinical strikers to silky midfield maestros. But success in Germany doesn’t always guarantee stardom on English soil. Over the years, a host of high-profile Bundesliga imports have crossed the channel with big expectations, only to fall short in the Premier League's fast-paced, unforgiving environment. In this piece, we take a closer look at some of the most talked-about flops — players who arrived with glowing reputations but failed to replicate their Bundesliga brilliance in England. From tactical mismatches to injury woes and cultural challenges, discover the stories behind these underwhelming transfers and what went wrong when German efficiency met Premier League chaos.",
+
       bundesliga_to_premier_league_flops:
         "Timo Werner lit up Germany with RB Leipzig but failed to reach those heights at Chelsea, despite winning the Champions League. His finishing woes and lack of confidence stood out. Shinji Kagawa, brilliant under Klopp at Dortmund, never found his rhythm at Manchester United. Sebastian Haller, dominant at Eintracht Frankfurt, looked lost at West Ham before bouncing back elsewhere. Even Joëlinton struggled at Newcastle as a striker before being redefined as a midfielder.",
       factors_behind_the_downfall:
@@ -403,12 +404,8 @@ export const blogs = [
     ],
     remarks: [],
     blog_id: "VcxnaZe7uD",
-    createdAt: {
-      $date: "2025-08-03T20:25:38.924Z",
-    },
-    updatedAt: {
-      $date: "2025-08-03T20:25:38.924Z",
-    },
+    createdAt: "2025-08-03T20:25:38.924Z",
+    updatedAt: "2025-08-03T20:25:38.924Z",
     content_hash:
       "bae3d6a2c1d50ca07e8b909cb9cae6bfbfb789d53c5527e1b5f0243731c5db60",
     __v: 0,

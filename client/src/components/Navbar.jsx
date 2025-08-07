@@ -65,26 +65,28 @@ const Navbar = (props) => {
 
   const renderMobileView = () => {
     return isOpen ? (
-      <div
-        className={`md:hidden flex flex-col gap-4 px-4 overflow-hidden transition duration-300 ${
-          isOpen ? "max-h-96 opacity-100 py-4" : "max-h-0 opacity-0 py-0"
-        }`}
-      >
-        {navLinks()}
-        <Button
-          text="Log In"
-          onClick={() => {
-            setIsOpen(false);
-            showAuthModal();
-          }}
-        />
+      <div className="">
+        <div
+          className={`md:hidden flex flex-col gap-4 px-4 overflow-hidden transition duration-300 ${
+            isOpen ? "max-h-96 opacity-100 py-4" : "max-h-0 opacity-0 py-0"
+          }`}
+        >
+          {navLinks()}
+          <Button
+            text="Log In"
+            onClick={() => {
+              setIsOpen(false);
+              showAuthModal();
+            }}
+          />
+        </div>
       </div>
     ) : null;
   };
 
   return (
     <header className="fixed top-0 left-0 w-full z-50 shadow bg-white py-2 border-b border-gray-300">
-      <div className="max-w-6xl mx-auto px-8">
+      <div className="max-w-7xl mx-auto px-8">
         {renderDesktopView()}
         {renderMobileView()}
       </div>

@@ -9,6 +9,7 @@ import AuthModal from "./components/auth/AuthModal";
 
 import LandingPage from "./pages/LandingPage";
 import BlogPost from "./pages/BlogPost";
+import Layout from "./components/Layout";
 
 const App = () => {
   const [showAuthModal, setShowAuthModal] = useState(false);
@@ -23,7 +24,7 @@ const App = () => {
 
       {/* Main content, offset for fixed navbar */}
       <main className="flex-1 pt-20">
-        <div className="mx-auto max-w-6xl pb-3 px-4 h-full">
+        <Layout>
           <Routes>
             <Route path="/" element={<Navigate to="/home" replace />} />
             <Route path="/home" element={<LandingPage />} />
@@ -31,7 +32,7 @@ const App = () => {
             {/** route -> /blog/`${slug}-${blog_id}`  */}
             <Route path="/blog/:slugWithId" element={<BlogPost />} />
           </Routes>
-        </div>
+        </Layout>
       </main>
 
       {/* Footer */}
