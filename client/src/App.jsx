@@ -23,7 +23,7 @@ const App = () => {
       />
 
       {/* Main content, offset for fixed navbar */}
-      <main className="flex-1 pt-20">
+      <main className="flex-1 py-20">
         <Layout>
           <Routes>
             <Route path="/" element={<Navigate to="/home" replace />} />

@@ -67,6 +67,13 @@ const LandingPage = () => {
                       {title}
                     </h4>
                   </div>
+                  {/** Tags */}
+                  <div className="text-xs text-gray-400 italic">
+                    {tags
+                      .slice(0, 3)
+                      .map((tag) => startCase(tag))
+                      .join(" | ")}
+                  </div>
 
                   {/* Preview */}
                   <div className="relative max-h-24 overflow-hidden">
@@ -78,12 +85,6 @@ const LandingPage = () => {
                     <p className="text-sm mt-1 text-gray-800 underline group-hover:font-medium">
                       Read more...
                     </p>
-                  </div>
-                  <div className="text-xs text-gray-400 italic">
-                    {tags
-                      .slice(0, 3)
-                      .map((tag) => startCase(tag))
-                      .join(" | ")}
                   </div>
                 </div>
               </Card>

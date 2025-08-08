@@ -11,10 +11,10 @@ const Modal = ({ isOpen, onClose, title = "Log in", children }) => {
 
     if (isOpen) {
       setShouldRender(true); // Mount the component to the DOM
-      showTimeout = setTimeout(() => setVisible(true), 50); // Small delay to trigger CSS transition
+      showTimeout = setTimeout(() => setVisible(true), 10); // Small delay to trigger CSS transition
     } else {
       setVisible(false); // Start hiding animation of the model
-      hideTimout = setTimeout(() => setShouldRender(false), 300); // After animation ends, unmount from DOM
+      hideTimout = setTimeout(() => setShouldRender(false), 200); // After animation ends, unmount from DOM
     }
 
     return () => {
@@ -38,11 +38,11 @@ const Modal = ({ isOpen, onClose, title = "Log in", children }) => {
         <div
           className={`relative bg-gray-200 shadow-xl w-full rounded-t-3xl
                       lg:max-w-md p-8 lg:rounded-2xl lg:mx-2 lg:my-8
-                      transform transition-all duration-300 ease-in-out
+                      transform transition-all duration-300 ease-out
                       ${
                         visible
-                          ? `translate-y-0 lg:scale-100`
-                          : `translate-y-full lg:translate-y-0 lg:scale-95`
+                          ? `opacity-100 translate-y-0 lg:scale-100`
+                          : `opacity-0 translate-y-full lg:translate-y-0 lg:scale-95`
                       }`}
           onClick={(e) => e.stopPropagation()}
         >
