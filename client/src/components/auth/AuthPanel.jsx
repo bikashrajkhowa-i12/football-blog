@@ -7,15 +7,15 @@ import Login from "./Login";
 import Signup from "./Signup";
 import ForgotPassword from "./ForgotPassword";
 
-const AuthModal = (props) => {
+const AuthPanel = (props) => {
   const { isOpen, onClose } = props || {};
   const [authView, setAuthView] = useState("login"); // flows: "login", "signup", "forgot_password"
   const onSwitchView = (view) => setAuthView(view);
   const config = APP_CONFIG.auth[authView] || {};
 
-  // useEffect(() => {
-  //   if (isOpen) onSwitchView("login"); // always start with login.
-  // }, [isOpen]);
+  useEffect(() => {
+    if (isOpen) onSwitchView("login"); // always start with login.
+  }, [isOpen]);
 
   const displayPrompt = () => {
     return (
@@ -27,20 +27,20 @@ const AuthModal = (props) => {
     );
   };
 
+  const COMPONENTS = {
+    login: Login,
+    signup: Signup,
+    forgot_password: ForgotPassword,
+  };
+
+  const DisplayComp = COMPONENTS[authView];
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} title={config?.title}>
       {displayPrompt()}
-      {authView === "login" && (
-        <Login authView={authView} onSwitchView={onSwitchView} />
-      )}
-      {authView === "signup" && (
-        <Signup authView={authView} onSwitchView={onSwitchView} />
-      )}
-      {authView === "forgot_password" && (
-        <ForgotPassword authView={authView} onSwitchView={onSwitchView} />
-      )}
+      <DisplayComp authView={authView} onSwitchView={onSwitchView} />
     </Modal>
   );
 };
 
-export default AuthModal;
+export default AuthPanel;

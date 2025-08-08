@@ -5,21 +5,21 @@ import "./App.css";
 
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
-import AuthModal from "./components/auth/AuthModal";
+import AuthPanel from "./components/auth/AuthPanel";
 
 import LandingPage from "./pages/LandingPage";
 import BlogPost from "./pages/BlogPost";
 import Layout from "./components/Layout";
 
 const App = () => {
-  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [showAuthPanel, setShowAuthPanel] = useState(false);
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar showAuthModal={() => setShowAuthModal(true)} />
-      <AuthModal
-        isOpen={showAuthModal}
-        onClose={() => setShowAuthModal(false)}
+      <Navbar showAuthModal={() => setShowAuthPanel(true)} />
+      <AuthPanel
+        isOpen={showAuthPanel}
+        onClose={() => setShowAuthPanel(false)}
       />
 
       {/* Main content, offset for fixed navbar */}
