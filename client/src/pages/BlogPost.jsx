@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { blogs } from "../demo/data";
 import { startCase } from "lodash";
+
+import { blogs } from "../demo/data";
 import Divider from "../components/Divider";
+
+// TODO: Remove this temporary image holders.
+import manchesterImage from "../demo/images/manchester.jpg";
+import bundesligaImage from "../demo/images/bundesliga.jpg";
 
 const BlogPost = () => {
   const { slugWithId } = useParams();
@@ -51,16 +56,28 @@ const BlogPost = () => {
       tags = [],
     } = blog;
 
+    const imageSrc =
+      tags.includes("Manchester United") || tags.includes("Manchester")
+        ? manchesterImage
+        : bundesligaImage;
     return (
       <article className="w-full flex flex-col gap-10">
         {/* Title + Meta */}
         <div className="border-l-8 border-red-600 pl-4 mb-4">
           <h1 className="text-3xl font-extrabold mb-1">{title}</h1>
-          <div className="text-gray-600 text-sm">
+          <div className="text-gray-600 text-sm mb-3">
             {published_date} • By {author} • 4 min read
           </div>
+          {/* TODO: Optional Image*/}
+          {imageSrc && (
+            <img
+              src={imageSrc}
+              alt="Blog"
+              className="rounded-md h-full object-content w-full"
+            />
+          )}
           {tags?.length > 0 && (
-            <div className="text-sm text-gray-500 mt-1">
+            <div className="text-sm text-gray-500 mt-1 italic">
               {tags.map((tag) => startCase(tag)).join(" • ")}
             </div>
           )}

@@ -11,6 +11,7 @@ import Divider from "../components/Divider";
 // TODO: Remove this temporary image holders.
 import manchesterImage from "../demo/images/manchester.jpg";
 import bundesligaImage from "../demo/images/bundesliga.jpg";
+import { demoAlert } from "../demo/alerts";
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -108,7 +109,7 @@ const LandingPage = () => {
         </p>
         <Button
           className="mt-6 px-5 py-2 bg-green-700 text-white rounded-md font-semibold hover:bg-green-800 transition"
-          onClick={() => navigate("/home")}
+          onClick={() => alert(demoAlert())}
         >
           Explore Latest Posts
         </Button>
@@ -162,7 +163,11 @@ const LandingPage = () => {
             className="px-4 py-1 border border-gray-400 rounded-md focus:outline-none focus:ring-1 focus:ring-green-700 w-full sm:w-auto"
           />
 
-          <Button text="Subscribe" type="submit" />
+          <Button
+            text="Subscribe"
+            type="submit"
+            onClick={() => alert(demoAlert())}
+          />
         </div>
       </section>
     </div>

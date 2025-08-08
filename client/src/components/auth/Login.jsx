@@ -1,12 +1,14 @@
 import FormBuilder from "../FormBuilder";
 import Button from "../Button";
 import Divider from "../Divider";
+import { demoAlert } from "../../demo/alerts";
 
 const Login = (props) => {
   const { onSwitchView } = props || {};
 
   const onSubmit = (data) => {
     console.log("FormData: ", data);
+    alert(demoAlert(data.email));
   };
 
   const fields = [
