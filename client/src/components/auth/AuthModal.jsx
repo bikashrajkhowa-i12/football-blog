@@ -17,13 +17,6 @@ const AuthModal = (props) => {
     if (isOpen) onSwitchView("login"); // always start with login.
   }, [isOpen]);
 
-  const COMPONENTS = {
-    login: Login,
-    signup: Signup,
-    forgot_password: ForgotPassword,
-  };
-  const DisplayComp = COMPONENTS[authView];
-
   const displayPrompt = () => {
     return (
       config.prompt && (
@@ -37,7 +30,15 @@ const AuthModal = (props) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} title={config?.title}>
       {displayPrompt()}
-      <DisplayComp authView={authView} onSwitchView={onSwitchView} />
+      {authView === "login" && (
+        <Login authView={authView} onSwitchView={onSwitchView} />
+      )}
+      {authView === "signup" && (
+        <Signup authView={authView} onSwitchView={onSwitchView} />
+      )}
+      {authView === "forgot_password" && (
+        <ForgotPassword authView={authView} onSwitchView={onSwitchView} />
+      )}
     </Modal>
   );
 };

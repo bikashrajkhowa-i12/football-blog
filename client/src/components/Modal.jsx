@@ -10,7 +10,7 @@ const Modal = ({ isOpen, onClose, title = "Log in", children }) => {
 
     if (isOpen) {
       setShouldRender(true); // Mount the component to the DOM
-      showTimeout = setTimeout(() => setVisible(true), 10); // Small delay to trigger CSS transition
+      showTimeout = setTimeout(() => setVisible(true), 50); // Small delay to trigger CSS transition
     } else {
       setVisible(false); // Start hiding animation of the model
       hideTimout = setTimeout(() => setShouldRender(false), 300); // After animation ends, unmount from DOM
