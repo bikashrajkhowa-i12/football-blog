@@ -13,9 +13,9 @@ const AuthModal = (props) => {
   const onSwitchView = (view) => setAuthView(view);
   const config = APP_CONFIG.auth[authView] || {};
 
-  useEffect(() => {
-    if (isOpen) onSwitchView("login"); // always start with login.
-  }, [isOpen]);
+  // useEffect(() => {
+  //   if (isOpen) onSwitchView("login"); // always start with login.
+  // }, [isOpen]);
 
   const displayPrompt = () => {
     return (

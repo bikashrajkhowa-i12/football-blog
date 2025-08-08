@@ -32,10 +32,10 @@ const LandingPage = () => {
               key={index}
               className="h-full group"
             >
-              <Card className="hover:border-gray-400 relative">
-                <div className="h-full flex flex-col justify-between gap-5 p-6">
+              <Card className="relative">
+                <div className="h-full flex flex-col justify-between gap-4">
                   <div className="border-l-4 border-red-700 pl-3">
-                    <h4 className="text-md font-bold text-gray-800 group-hover:text-red-700 underline line-clamp-2">
+                    <h4 className="mt-2 text-md font-bold text-gray-800 group-hover:text-red-700 underline line-clamp-2">
                       {title}
                     </h4>
                     <p className="text-xs text-gray-500 mt-2">
@@ -58,7 +58,7 @@ const LandingPage = () => {
                   <Badge
                     size="2xs"
                     variant="danger"
-                    className="absolute top-1.5 right-0 text-right"
+                    className="absolute top-0 left-0 text-right"
                   >
                     {published_date} | {reading_time}
                   </Badge>
