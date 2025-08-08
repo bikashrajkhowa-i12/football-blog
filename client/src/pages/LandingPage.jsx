@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { startCase } from "lodash";
 
 import { blogs } from "../demo/data";
@@ -14,8 +14,6 @@ import bundesligaImage from "../demo/images/bundesliga.jpg";
 import { demoAlert } from "../demo/alerts";
 
 const LandingPage = () => {
-  const navigate = useNavigate();
-
   const featuredBlogs = () => {
     return blogs.length ? (
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -59,7 +57,7 @@ const LandingPage = () => {
                     <img
                       src={imageSrc}
                       alt="Blog"
-                      className="rounded-md max-h-52 object-cover w-full"
+                      className="rounded-md max-h-52 object-cover w-full group-hover:scale-105 transition duration-200"
                     />
                   )}
 

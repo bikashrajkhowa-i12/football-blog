@@ -30,10 +30,10 @@ const ForgotPassword = (props) => {
     return (
       <div className="flex justify-center">
         <p
-          className="text-sm text-gray-500 hover:text-green-700 cursor-pointer underline"
+          className="text-sm text-gray-500 hover:text-orange-500 cursor-pointer mt-4 text-center transition-colors"
           onClick={() => onSwitchView("login")}
         >
-          Login instead
+          {"<"} Back to login
         </p>
       </div>
     );

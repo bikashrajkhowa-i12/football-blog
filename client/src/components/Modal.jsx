@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Button from "./Button";
 
 const Modal = ({ isOpen, onClose, title = "Log in", children }) => {
   const [shouldRender, setShouldRender] = useState(false);
@@ -29,22 +30,28 @@ const Modal = ({ isOpen, onClose, title = "Log in", children }) => {
         visible ? "opacity-100" : "opacity-0"
       }`}
     >
+      {/** Drawer functionality in the below two <div>'s */}
       <div
-        className="min-h-screen flex items-center justify-center px-4"
+        className="min-h-screen flex items-end lg:items-center justify-center lg:px-4 sm:mt-6 lg:mt-0"
         onClick={onClose}
       >
         <div
-          className={`relative bg-gray-200 rounded-2xl shadow-xl w-full max-w-md p-8 mx-2 my-8 transform transition-all duration-200 ease-out ${
-            visible ? "opacity-100 scale-100" : "opacity-0 scale-95"
-          }`}
+          className={`relative bg-gray-200 shadow-xl w-full rounded-t-3xl
+                      lg:max-w-md p-8 lg:rounded-2xl lg:mx-2 lg:my-8
+                      transform transition-all duration-300 ease-in-out
+                      ${
+                        visible
+                          ? `translate-y-0 lg:scale-100`
+                          : `translate-y-full lg:translate-y-0 lg:scale-95`
+                      }`}
           onClick={(e) => e.stopPropagation()}
         >
-          <button
+          <Button
+            text="✕"
             className="absolute top-3 right-3 text-gray-400 text-sm font-bold hover:text-gray-800 w-8 h-8"
             onClick={onClose}
-          >
-            ✕
-          </button>
+            hide=""
+          />
 
           {title && (
             <h2 className="text-center text-lg font-bold text-gray-700 mb-4">
@@ -67,7 +74,7 @@ export default Modal;
      ## For eg: transition duration-300 on a component is useless if its removed immediatly from the DOM ("isOpen")
      ## To achieve that:
         1. "shouldRender": Mounts the component to DOM with opacity-0.(invisible)
-        2. "visible": Make quick switch of CSS class from opacity 0-100 in 10ms. This makes the component visible.
+        2. "visible": Make quick switch of CSS class from opacity 0-100 in 50ms. This makes the component visible.
         3. CSS transition class work smooth because of the change of opacity and not directly on the DOM level "isOpen".
 
      ## Code-wise explanation:

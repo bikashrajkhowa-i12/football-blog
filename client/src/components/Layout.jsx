@@ -2,7 +2,7 @@ import React from "react";
 
 const Layout = ({ children }) => {
   return (
-    <div className="flex px-4 gap-4">
+    <div className="flex justify-center px-4 gap-4">
       {/* Left aside (visible on lg and up) */}
       <aside className="hidden lg:block w-[100px]">
         {/* Future sidebar content */}
