@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useScrollbarHide } from "./useScrollbarHide";
+import { useScrollbarHide } from "./scrollHooks";
 
 export const useInteractionLock = (lock) => {
   useScrollbarHide(lock);

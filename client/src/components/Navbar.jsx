@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import Button from "./Button";
 
-const Navbar = (props) => {
-  const { showAuthModal = () => false } = props || {};
+const Navbar = ({ showAuthPanel = false, setShowAuthPanel }) => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -49,7 +49,7 @@ const Navbar = (props) => {
         <div className="hidden md:flex gap-6 items-center">{navLinks()}</div>
 
         <div className="hidden md:flex flex-col items-center">
-          <Button text="Log In" onClick={showAuthModal} />
+          <Button text="Log In" onClick={() => setShowAuthPanel(true)} />
         </div>
 
         {/* Mobile Menu Button */}
@@ -76,7 +76,7 @@ const Navbar = (props) => {
             text="Log In"
             onClick={() => {
               setIsOpen(false);
-              showAuthModal();
+              setShowAuthPanel(true);
             }}
           />
         </div>
@@ -85,7 +85,7 @@ const Navbar = (props) => {
   };
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 bg-white border-b border-gray-300">
+    <header className="fixed top-0 left-0 w-screen z-50 bg-white border-b border-gray-300">
       <div className="max-w-7xl mx-auto px-8">
         {renderDesktopView()}
         {renderMobileView()}

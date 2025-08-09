@@ -15,10 +15,14 @@ import { useScreenVH } from "./hooks/useScreenVH";
 const App = () => {
   useScreenVH(); // set the view port height dynamically based on actually screen-vh
   const [showAuthPanel, setShowAuthPanel] = useState(false);
+  const switchShowAuthPanel = (value) => setShowAuthPanel(value);
 
   return (
-    <div className="min-h-[calc(var(--h)*100)] flex flex-col">
-      <Navbar showAuthModal={() => setShowAuthPanel(true)} />
+    <div className="min-h-[calc(var(--vh)*100)] flex flex-col">
+      <Navbar
+        showAuthPanel={showAuthPanel}
+        setShowAuthPanel={switchShowAuthPanel}
+      />
       <AuthPanel
         isOpen={showAuthPanel}
         onClose={() => setShowAuthPanel(false)}
