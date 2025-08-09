@@ -7,7 +7,7 @@ const Modal = ({ isOpen, onClose, title = "Log in", children }) => {
   const [visible, setVisible] = useState(false);
 
   //TODO: Use a global state to toggle
-  useInteractionLock(isOpen); //locak interaction when modal is open
+  useInteractionLock(isOpen); //lock interaction when modal is open
 
   useEffect(() => {
     let showTimeout;

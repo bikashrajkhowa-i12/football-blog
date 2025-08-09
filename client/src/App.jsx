@@ -5,17 +5,19 @@ import "./App.css";
 
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
+import Layout from "./components/Layout";
 import AuthPanel from "./components/auth/AuthPanel";
 
 import LandingPage from "./pages/LandingPage";
 import BlogPost from "./pages/BlogPost";
-import Layout from "./components/Layout";
+import { useScreenVH } from "./hooks/useScreenVH";
 
 const App = () => {
+  useScreenVH(); // set the view port height dynamically based on actually screen-vh
   const [showAuthPanel, setShowAuthPanel] = useState(false);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-[calc(var(--h)*100)] flex flex-col">
       <Navbar showAuthModal={() => setShowAuthPanel(true)} />
       <AuthPanel
         isOpen={showAuthPanel}

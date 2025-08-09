@@ -19,7 +19,7 @@ const FormBuilder = (props) => {
       className = "",
     } = field || {};
 
-    const inputElementClass = `w-full text-sm rounded-md px-3 py-2 ring-[0.3px] ring-gray-400 opacity-70 
+    const inputElementClass = `w-full text-base rounded-md px-3 py-2 ring-[0.3px] ring-gray-400 opacity-70 
       focus:outline-none focus:ring-[2px] focus:opacity-90 placeholder-opacity-100 placeholder-gray-500 ${className}`;
     const id = field.id || field.name || `field-${idx}`;
     const labelElement = label && type !== "hidden" && (
