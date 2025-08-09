@@ -103,7 +103,7 @@ const BlogPost = () => {
 
   return (
     <div className="py-10 px-2 sm:px-4 flex flex-col gap-12">
-      <div className="max-w-3xl mx-auto w-full">{displayContent()}</div>
+      <div className="max-w-4xl mx-auto w-full">{displayContent()}</div>
     </div>
   );
 };

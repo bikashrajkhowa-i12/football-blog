@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Button from "./Button";
+import { useInteractionLock } from "../hooks/useInteractionLock";
 
 const Modal = ({ isOpen, onClose, title = "Log in", children }) => {
   const [shouldRender, setShouldRender] = useState(false);
   const [visible, setVisible] = useState(false);
+
+  //TODO: Use a global state to toggle
+  useInteractionLock(isOpen); //locak interaction when modal is open
 
   useEffect(() => {
     let showTimeout;
@@ -14,7 +18,7 @@ const Modal = ({ isOpen, onClose, title = "Log in", children }) => {
       showTimeout = setTimeout(() => setVisible(true), 10); // Small delay to trigger CSS transition
     } else {
       setVisible(false); // Start hiding animation of the model
-      hideTimout = setTimeout(() => setShouldRender(false), 200); // After animation ends, unmount from DOM
+      hideTimout = setTimeout(() => setShouldRender(false), 300); // After animation ends, unmount from DOM
     }
 
     return () => {
@@ -26,23 +30,24 @@ const Modal = ({ isOpen, onClose, title = "Log in", children }) => {
 
   return shouldRender ? (
     <div
-      className={`fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-60 transition-opacity duration-300 ${
-        visible ? "opacity-100" : "opacity-0"
-      }`}
+      className={`fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-60 
+                transition-opacity duration-1000 lg:duration-200 ease-out
+                ${visible ? "opacity-100" : "opacity-100 lg:opacity-0"}`}
     >
       {/** Drawer functionality in the below two <div>'s */}
       <div
-        className="min-h-screen flex items-end lg:items-center justify-center lg:px-4 sm:mt-6 lg:mt-0"
+        className="min-h-screen flex justify-center items-end lg:items-center lg:px-4"
         onClick={onClose}
       >
         <div
           className={`relative bg-gray-200 shadow-xl w-full rounded-t-3xl
                       lg:max-w-md p-8 lg:rounded-2xl lg:mx-2 lg:my-8
-                      transform transition-all duration-300 ease-out
+                      transform transition-all duration-[600ms] ease-in-out
+                      lg:duration-200 pb-10 lg:pb-2
                       ${
                         visible
-                          ? `opacity-100 translate-y-0 lg:scale-100`
-                          : `opacity-0 translate-y-full lg:translate-y-0 lg:scale-95`
+                          ? `translate-y-0 lg:scale-100`
+                          : `translate-y-full lg:translate-y-0 lg:scale-95`
                       }`}
           onClick={(e) => e.stopPropagation()}
         >

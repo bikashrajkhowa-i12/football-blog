@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "./Button";
 
 const Navbar = (props) => {
-  const { showAuthModal = () => "" } = props || {};
+  const { showAuthModal = () => false } = props || {};
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -85,7 +85,7 @@ const Navbar = (props) => {
   };
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 bg-white py-2 border-b border-gray-300">
+    <header className="fixed top-0 left-0 w-full z-50 bg-white border-b border-gray-300">
       <div className="max-w-7xl mx-auto px-8">
         {renderDesktopView()}
         {renderMobileView()}
