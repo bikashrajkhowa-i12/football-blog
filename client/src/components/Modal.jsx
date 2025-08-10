@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Button from "./Button";
-import { useInteractionLock } from "../hooks/useInteractionLock";
 
 const Modal = ({ isOpen, onClose, title = "Log in", children }) => {
   const [shouldRender, setShouldRender] = useState(false);
   const [visible, setVisible] = useState(false);
-
-  //TODO: Use a global state to toggle
-  useInteractionLock(isOpen); //lock interaction when modal is open
 
   useEffect(() => {
     let showTimeout;
@@ -31,7 +27,7 @@ const Modal = ({ isOpen, onClose, title = "Log in", children }) => {
   return shouldRender ? (
     <div
       className={`fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-60 
-                transition-opacity duration-1000 lg:duration-200 ease-out
+                transition-opacity duration-1000 lg:duration-300 ease-out
                 ${visible ? "opacity-100" : "opacity-100 lg:opacity-0"}`}
     >
       {/** Drawer functionality in the below two <div>'s */}
