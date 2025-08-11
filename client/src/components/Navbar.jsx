@@ -4,7 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import Button from "./Button";
 import Drawer from "./Drawer";
 
-const Navbar = ({ setShowAuthPanel, isLoggedIn = true }) => {
+const Navbar = ({ setShowAuthPanel, isLoggedIn = false }) => {
   const navigate = useNavigate();
   const [showDrawer, setShowDrawer] = useState(false);
   const closeDrawer = () => setShowDrawer(false);
