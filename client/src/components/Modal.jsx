@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Button from "./Button";
 import { useFullInteractionLock } from "../hooks/useFullInteractionLock";
 
 const Modal = ({ isOpen, onClose, title = "Log in", children }) => {

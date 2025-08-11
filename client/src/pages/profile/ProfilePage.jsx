@@ -1,15 +1,12 @@
 import React from "react";
 import Button from "../../components/Button";
-import { useNavigate } from "react-router-dom";
 
 import FormBuilder from "../../components/FormBuilder";
 import defaultAvatar from "./user-profile-logo.png";
 
 const ProfilePage = () => {
-  const navigate = useNavigate();
-
   return (
-    <div className="max-w-4xl mx-auto w-full flex flex-col gap-16">
+    <div className="max-w-4xl mx-auto w-full flex flex-col gap-16 p-10">
       {/* Avatar */}
       <div className="flex flex-col justify-center items-center">
         <div className="relative w-[100px] h-[100px] rounded-full overflow-hidden flex justify-center items-center">

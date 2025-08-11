@@ -118,9 +118,7 @@ const LandingPage = () => {
       {/* Featured Blogs */}
       <section className="max-w-6xl mx-auto w-full px-1 py-6 ">
         <div className="mb-10">
-          <Badge variant="danger" size="lg">
-            Featured Posts
-          </Badge>
+          <h2 className="text-3xl text-gray-800 font-bold">Featured Posts</h2>
         </div>
         {featuredBlogs()}
       </section>
@@ -174,6 +172,7 @@ const LandingPage = () => {
           <Button
             text="Subscribe"
             type="submit"
+            variant="success"
             onClick={() => alert(demoAlert())}
           />
         </div>
