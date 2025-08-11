@@ -10,15 +10,14 @@ const Navbar = ({ setShowAuthPanel, isLoggedIn = false }) => {
   const closeDrawer = () => setShowDrawer(false);
 
   const appLogo = (
-    <img
-      src="/logos/navlogo1.png"
-      alt="logo"
-      className="h-10 w-auto cursor-pointer"
-      onClick={() => {
-        navigate("/home");
-        closeDrawer();
-      }}
-    />
+    <Link to="/home">
+      <img
+        src="/logos/navlogo1.png"
+        alt="logo"
+        className="h-10 w-auto cursor-pointer"
+        onClick={closeDrawer}
+      />
+    </Link>
   );
 
   const navLinks = (className = "") => {

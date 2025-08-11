@@ -6,7 +6,7 @@ import defaultAvatar from "./user-profile-logo.png";
 
 const ProfilePage = () => {
   return (
-    <div className="max-w-4xl mx-auto w-full flex flex-col gap-16 p-10">
+    <div className="max-w-4xl mx-auto w-full flex flex-col gap-16 py-10 px-8">
       {/* Avatar */}
       <div className="flex flex-col justify-center items-center">
         <div className="relative w-[100px] h-[100px] rounded-full overflow-hidden flex justify-center items-center">

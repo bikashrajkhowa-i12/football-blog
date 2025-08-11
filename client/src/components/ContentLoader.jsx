@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useFreezePageInteraction } from "../hooks/useFreezePageInteraction";
 
-const LoadingWrapper = (loading = false) => {
+const ContentLoader = ({ loading = false }) => {
   const [renderLoading, setRenderLoading] = useState(false);
   const [visibleLoader, setVisibleLoader] = useState(false);
 
-  useFreezePageInteraction(loading);
   useEffect(() => {
     let showTimeout, hideTimeout;
+
     if (loading) {
       setRenderLoading(true);
       showTimeout = setTimeout(() => setVisibleLoader(true), 10);
@@ -25,10 +24,15 @@ const LoadingWrapper = (loading = false) => {
   if (!renderLoading) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-black bg-opacity-60 transition">
-      <div className=""></div>
+    <div
+      className={`absolute inset-0 z-40 flex items-center justify-center bg-white bg-opacity-50
+         transition-opacity duration-300 cursor-not-allowed
+        ${visibleLoader ? "opacity-100" : "opacity-0"}`}
+    >
+      {/* Loader */}
+      <div className="w-8 h-8 border-4 border-black border-t-transparent rounded-full animate-spin" />
     </div>
   );
 };
 
-export default LoadingWrapper;
+export default ContentLoader;

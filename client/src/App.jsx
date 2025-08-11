@@ -3,6 +3,7 @@ import { Route, Routes, Navigate } from "react-router-dom";
 
 import "./App.css";
 
+import { useLoaderContext } from "./context/LoaderContext";
 import { useScreenVH } from "./hooks/useScreenVH";
 
 import Navbar from "./components/Navbar";
@@ -13,14 +14,17 @@ import Layout from "./components/Layout";
 import LandingPage from "./pages/LandingPage";
 import BlogPost from "./pages/BlogPost";
 import ProfilePage from "./pages/profile/ProfilePage";
+import GlobalLoader from "./components/GlobalLoader";
 
 const App = () => {
   useScreenVH(); // set the view port height dynamically based on actually screen-vh
+  const { type = "global", loading = false } = useLoaderContext();
   const [showAuthPanel, setShowAuthPanel] = useState(false);
   const switchShowAuthPanel = (value) => setShowAuthPanel(value);
 
   return (
     <div className="min-h-[calc(var(--vh)*100)] flex flex-col">
+      {type === "global" && <GlobalLoader loading={loading} />}
       <Navbar
         showAuthPanel={showAuthPanel}
         setShowAuthPanel={switchShowAuthPanel}
