@@ -38,20 +38,21 @@ const Login = (props) => {
     {
       label: "Log In",
       type: "submit",
-      className:
-        "w-full py-2 rounded-lg text-white bg-green-700 opacity-95 hover:bg-green-800 hover:opacity-100 active:bg-green-900 transition duration-300",
+      variant: "success",
+      className: "w-full py-2",
     },
   ];
 
   const signUp = () => {
     return (
       <div className="w-full flex justify-center items-center mt-2">
-        <p className="text-sm text-gray-600">No account yet?</p>
-        <Button
-          className="text-sm font-semibold bg-transparent shadow-none text-green-700 pl-1.5 active:bg-transparent hover:underline active:text-green-900"
-          text="Sign up"
+        <p className="text-base text-gray-600">No account yet?</p>
+        <span
+          className="text-base font-semibold cursor-pointer text-green-700 pl-1.5 hover:underline"
           onClick={() => onSwitchView("signup")}
-        />
+        >
+          Sign up
+        </span>
       </div>
     );
   };
@@ -60,7 +61,7 @@ const Login = (props) => {
     return (
       <div className="flex justify-start">
         <p
-          className="text-sm text-gray-500 hover:text-gray-600 hover:cursor-pointer active:text-gray-700"
+          className="text-base text-gray-500 hover:text-gray-600 hover:cursor-pointer active:text-gray-700"
           onClick={() => onSwitchView("forgot_password")}
         >
           Forgot Password ?

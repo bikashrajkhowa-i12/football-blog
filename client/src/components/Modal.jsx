@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Button from "./Button";
+import { useFullInteractionLock } from "../hooks/useFullInteractionLock";
 
 const Modal = ({ isOpen, onClose, title = "Log in", children }) => {
   const [shouldRender, setShouldRender] = useState(false);
   const [visible, setVisible] = useState(false);
-
+  useFullInteractionLock(isOpen);
   useEffect(() => {
     let showTimeout;
     let hideTimout;
@@ -48,12 +49,12 @@ const Modal = ({ isOpen, onClose, title = "Log in", children }) => {
                       }`}
           onClick={(e) => e.stopPropagation()}
         >
-          <Button
-            text="✕"
+          <button
             className="absolute top-3 right-3 text-gray-400 text-sm font-bold hover:text-gray-800 w-8 h-8"
             onClick={onClose}
-            hide=""
-          />
+          >
+            ✕
+          </button>
 
           {title && (
             <h2 className="text-center text-lg font-bold text-gray-700 mb-4">

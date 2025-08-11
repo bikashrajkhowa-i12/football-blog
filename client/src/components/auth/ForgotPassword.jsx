@@ -21,8 +21,8 @@ const ForgotPassword = (props) => {
     {
       label: "Send Reset Link",
       type: "submit",
-      className:
-        "w-full py-2 rounded-lg text-white bg-orange-500 opacity-90 hover:opacity-100 active:bg-orange-600 transition duration-400",
+      variant: "orange",
+      className: "w-full py-2",
     },
   ];
 

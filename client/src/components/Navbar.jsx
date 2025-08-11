@@ -4,7 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import Button from "./Button";
 import Drawer from "./Drawer";
 
-const Navbar = ({ setShowAuthPanel, isLoggedIn = false }) => {
+const Navbar = ({ setShowAuthPanel, isLoggedIn = true }) => {
   const navigate = useNavigate();
   const [showDrawer, setShowDrawer] = useState(false);
   const closeDrawer = () => setShowDrawer(false);
@@ -54,7 +54,8 @@ const Navbar = ({ setShowAuthPanel, isLoggedIn = false }) => {
         {/**if not logged in and mobile-view, display the "Log-in" at end of drawer-links */}
         {!isLoggedIn && (
           <Button
-            className="md:hidden bg-green-700 text-white rounded-md py-1"
+            variant="success"
+            className="md:hidden py-1"
             onClick={() => {
               closeDrawer();
               setShowAuthPanel(true);
@@ -69,7 +70,7 @@ const Navbar = ({ setShowAuthPanel, isLoggedIn = false }) => {
 
   return (
     <header className="fixed top-0 left-0 w-screen z-50 bg-white border-b border-gray-300">
-      <div className="max-w-7xl mx-auto px-8">
+      <div className="max-w-7xl mx-auto px-4 md:px-8">
         <nav className="flex items-center justify-between py-3">
           {/* Mobile Menu Button */}
           <div className="w-10 md:hidden">
@@ -91,7 +92,11 @@ const Navbar = ({ setShowAuthPanel, isLoggedIn = false }) => {
           <div className="w-20 flex justify-center items-center">
             <div className="hidden md:block">
               {!isLoggedIn ? (
-                <Button text="Log In" onClick={() => setShowAuthPanel(true)} />
+                <Button
+                  variant="success"
+                  text="Log In"
+                  onClick={() => setShowAuthPanel(true)}
+                />
               ) : (
                 <span
                   className="text-xl border-2 border-black opacity-80 rounded-full cursor-pointer hover:opacity-100 transition duration-300"

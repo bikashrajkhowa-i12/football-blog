@@ -46,20 +46,21 @@ const Signup = (props) => {
     {
       label: "Sign up",
       type: "submit",
-      className:
-        "w-full py-2 rounded-lg text-white bg-green-700 opacity-95 hover:bg-green-800 hover:opacity-100 active:bg-green-900 transition duration-300",
+      variant: "success",
+      className: "w-full py-2",
     },
   ];
 
   const login = () => {
     return (
       <div className="w-full flex justify-center items-center mt-2">
-        <p className="text-sm text-gray-600">Already have an account?</p>
-        <Button
-          className="text-sm font-semibold bg-transparent shadow-none text-green-700 pl-1.5 active:bg-transparent hover:underline active:text-green-900"
-          text="Login"
+        <p className="text-base text-gray-600">Already have an account?</p>
+        <span
+          className="text-base font-semibold cursor-pointer text-green-700 pl-1.5 hover:underline"
           onClick={() => onSwitchView("login")}
-        />
+        >
+          Login
+        </span>
       </div>
     );
   };

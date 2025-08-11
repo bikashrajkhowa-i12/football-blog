@@ -19,13 +19,16 @@ const FormBuilder = (props) => {
       className = "",
     } = field || {};
 
-    const inputElementClass = `w-full text-base rounded-md px-3 py-2 ring-[0.3px] ring-gray-400 opacity-70 
-      focus:outline-none focus:ring-[2px] focus:opacity-90 placeholder-opacity-100 placeholder-gray-500 ${className}`;
+    const inputElementClass = `w-full text-base rounded-md p-2 ring-[0.3px] ring-gray-400 opacity-70 
+                              focus:outline-none focus:ring-[2px] focus:opacity-90 placeholder-opacity-100 
+                              placeholder-gray-500 disabled:bg-gray-100 disabled:text-gray-700 disabled:ring-gray-400 
+                              disabled:opacity-70 disabled:cursor-not-allowed ${className}`;
+
     const id = field.id || field.name || `field-${idx}`;
     const labelElement = label && type !== "hidden" && (
       <label
         htmlFor={id}
-        className="w-32 break-words whitespace-normal flex-1 text-gray-700"
+        className="text-base w-full p-2 break-words whitespace-normal flex-1 text-gray-700"
       >
         {label}
       </label>
@@ -46,6 +49,7 @@ const FormBuilder = (props) => {
               onChange={field.controlled ? field.onChange : undefined}
               required={required}
               className="w-[14.5px] h-[14.5px] mt-0.5 accent-green-800 rounded cursor-pointer"
+              {...field}
               {...attributes}
             />
             <span className="text-gray-600 text-sm">{label}</span>
@@ -62,6 +66,7 @@ const FormBuilder = (props) => {
             onChange={field.controlled ? field.onChange : undefined}
             required={required}
             className={inputElementClass}
+            {...field}
             {...attributes}
           >
             {field.options?.map((opt) => {
@@ -87,6 +92,7 @@ const FormBuilder = (props) => {
             required={required}
             placeholder={placeholder}
             className={inputElementClass}
+            {...field}
             {...attributes}
           />
         );
@@ -101,6 +107,7 @@ const FormBuilder = (props) => {
             value={field.controlled ? field.value : undefined}
             defaultValue={!field.controlled ? field.value : undefined}
             onChange={field.controlled ? field.onChange : undefined}
+            {...field}
             {...attributes}
           />
         );
@@ -118,6 +125,7 @@ const FormBuilder = (props) => {
             required={required}
             placeholder={placeholder}
             className={inputElementClass}
+            {...field}
             {...attributes}
           />
         );
@@ -125,18 +133,17 @@ const FormBuilder = (props) => {
     }
 
     return (
-      <div
-        key={idx}
-        className="flex w-full justify-between items-start gap-3 text-sm sm:text-base"
-      >
+      <div key={idx} className="flex w-full items-start gap-3 text-base">
         {type === "checkbox" ? (
-          <div className="flex items-center w-50">{inputElement}</div>
+          <div className="flex items-center w-fit">{inputElement}</div>
         ) : (
           <>
             {label && (
-              <div className="flex items-center w-20">{labelElement}</div>
+              <div className="flex items-center flex-[1] max-w-[33%]">
+                {labelElement}
+              </div>
             )}
-            <div className="flex items-center w-full">{inputElement}</div>
+            <div className="flex items-center flex-[2]">{inputElement}</div>
           </>
         )}
       </div>
@@ -152,6 +159,7 @@ const FormBuilder = (props) => {
         onClick={btn.onClick}
         className={btn.className}
         text={btn.label}
+        {...btn}
       />
     );
   };

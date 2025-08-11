@@ -99,7 +99,7 @@ const LandingPage = () => {
     <div className="flex flex-col gap-16 py-10 px-2 sm:px-4">
       {/* Hero Section */}
       <section className="text-center max-w-3xl mx-auto">
-        <h1 className="text-2xl md:text-5xl font-extrabold text-gray-900 mb-8">
+        <h1 className="text-3xl md:text-5xl font-extrabold text-gray-900 mb-8">
           Your Daily Dose of Football Insights
         </h1>
         <p className="text-gray-600 text-md md:text-2xl font-light mb-8">
@@ -107,7 +107,8 @@ const LandingPage = () => {
           place.
         </p>
         <Button
-          className="mt-6 px-5 py-2 bg-green-700 text-white rounded-md font-semibold hover:bg-green-800 transition"
+          variant="success"
+          className="mt-6 px-5 py-2 rounded-full"
           onClick={() => alert(demoAlert())}
         >
           Explore Latest Posts

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useFreezePageInteraction } from "../hooks/useFreezePageInteraction";
+import { useFullInteractionLock } from "../hooks/useFullInteractionLock";
 
 const Drawer = ({
   isOpen,
@@ -13,7 +13,7 @@ const Drawer = ({
   const [render, setRender] = useState(isOpen);
   const [visible, setVisible] = useState(false);
 
-  useFreezePageInteraction(isOpen);
+  useFullInteractionLock(isOpen);
 
   useEffect(() => {
     let showTimeout, hideTimeout;
