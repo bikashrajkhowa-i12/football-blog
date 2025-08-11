@@ -1,94 +1,127 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import Button from "./Button";
+import Drawer from "./Drawer";
 
-const Navbar = ({ showAuthPanel = false, setShowAuthPanel }) => {
-  const [isOpen, setIsOpen] = useState(false);
+const Navbar = ({ setShowAuthPanel, isLoggedIn = true }) => {
   const navigate = useNavigate();
+  const [showDrawer, setShowDrawer] = useState(false);
+  const closeDrawer = () => setShowDrawer(false);
 
-  const onClickNavLink = () => {
-    setIsOpen(false);
-  };
+  const appLogo = (
+    <img
+      src="/logos/navlogo1.png"
+      alt="logo"
+      className="h-10 w-auto cursor-pointer"
+      onClick={() => {
+        navigate("/home");
+        closeDrawer();
+      }}
+    />
+  );
 
-  const navLinks = () => {
-    const className = "hover:text-green-700 active:text-green-800 text-sm";
+  const navLinks = (className = "") => {
+    const linkClass = "hover:text-green-700 active:text-green-800 text-sm";
     return (
-      <>
-        <a href="##" className={className} onClick={onClickNavLink}>
-          Home
-        </a>
-        <a href="##" className={className} onClick={onClickNavLink}>
-          Latest
-        </a>
-        <a href="##" className={className} onClick={onClickNavLink}>
-          Fixtures
-        </a>
-        <a href="##" className={className} onClick={onClickNavLink}>
-          Teams
-        </a>
-      </>
-    );
-  };
-
-  const renderDesktopView = () => {
-    return (
-      <nav className="flex items-center justify-between py-3">
-        {/* Logo */}
-        <img
-          src="/logos/navlogo1.png"
-          alt="logo"
-          className="h-10 w-auto cursor-pointer"
-          onClick={() => {
-            navigate("/home");
-            setIsOpen(false);
-          }}
-        />
-
-        {/* Desktop Nav */}
-        <div className="hidden md:flex gap-6 items-center">{navLinks()}</div>
-
-        <div className="hidden md:flex flex-col items-center">
-          <Button text="Log In" onClick={() => setShowAuthPanel(true)} />
-        </div>
-
-        {/* Mobile Menu Button */}
-        <button
-          className="md:hidden mb-3"
-          onClick={() => setIsOpen((prev) => !prev)}
-        >
-          {isOpen ? "✖" : "☰"}
-        </button>
-      </nav>
-    );
-  };
-
-  const renderMobileView = () => {
-    return isOpen ? (
-      <div className="">
-        <div
-          className={`md:hidden flex flex-col gap-4 px-4 overflow-hidden transition duration-300 ${
-            isOpen ? "max-h-96 opacity-100 py-4" : "max-h-0 opacity-0 py-0"
-          }`}
-        >
-          {navLinks()}
-          <Button
-            text="Log In"
+      <div className={className}>
+        {/**if logged in and mobile-view, display the "Profile" at top of drawer-links */}
+        {isLoggedIn && (
+          <div
+            className="md:hidden"
             onClick={() => {
-              setIsOpen(false);
+              navigate("/profile");
+              closeDrawer();
+            }}
+          >
+            Profile
+          </div>
+        )}
+
+        <Link to="/home" className={linkClass} onClick={closeDrawer}>
+          Home
+        </Link>
+        <Link to="/latest" className={linkClass} onClick={closeDrawer}>
+          Latest
+        </Link>
+        <Link to="/fixtures" className={linkClass} onClick={closeDrawer}>
+          Fixtures
+        </Link>
+        <Link to="/teams" className={linkClass} onClick={closeDrawer}>
+          Teams
+        </Link>
+
+        {/**if not logged in and mobile-view, display the "Log-in" at end of drawer-links */}
+        {!isLoggedIn && (
+          <Button
+            className="md:hidden bg-green-700 text-white rounded-md py-1"
+            onClick={() => {
+              closeDrawer();
               setShowAuthPanel(true);
             }}
-          />
-        </div>
+          >
+            Log in
+          </Button>
+        )}
       </div>
-    ) : null;
+    );
   };
 
   return (
     <header className="fixed top-0 left-0 w-screen z-50 bg-white border-b border-gray-300">
       <div className="max-w-7xl mx-auto px-8">
-        {renderDesktopView()}
-        {renderMobileView()}
+        <nav className="flex items-center justify-between py-3">
+          {/* Mobile Menu Button */}
+          <div className="w-10 md:hidden">
+            <button
+              className="mb-[6px] opacity-60 mr-4 text-2xl rounded-md"
+              onClick={() => setShowDrawer((v) => !v)}
+            >
+              ☰
+            </button>
+          </div>
+
+          {/* Logo */}
+          {appLogo}
+
+          {/* Desktop Nav */}
+          <div className="hidden md:flex gap-6">{navLinks("flex gap-4")}</div>
+
+          {/* Login/Profile */}
+          <div className="w-20 flex justify-center items-center">
+            <div className="hidden md:block">
+              {!isLoggedIn ? (
+                <Button text="Log In" onClick={() => setShowAuthPanel(true)} />
+              ) : (
+                <span
+                  className="text-xl border-2 border-black opacity-80 rounded-full cursor-pointer hover:opacity-100 transition duration-300"
+                  onClick={() => navigate("/profile")}
+                >
+                  👤
+                </span>
+              )}
+            </div>
+          </div>
+        </nav>
+
+        {/* Mobile Drawer */}
+        <Drawer
+          isOpen={showDrawer}
+          onClose={closeDrawer}
+          position="left"
+          viewScreen="md:hidden" //visible only on small-screens
+        >
+          <div className="flex justify-between p-4 border-b border-gray-300">
+            {appLogo}
+            <span
+              className="flex items-center text-2xl mb-2 opacity-70 cursor-pointer"
+              onClick={closeDrawer}
+            >
+              ✖
+            </span>
+          </div>
+          {navLinks("flex flex-col gap-4 p-4")}
+        </Drawer>
       </div>
     </header>
   );
