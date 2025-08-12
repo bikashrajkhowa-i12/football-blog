@@ -22,7 +22,7 @@ const Drawer = ({
       showTimeout = setTimeout(() => setVisible(true), 10);
     } else {
       setVisible(false);
-      hideTimeout = setTimeout(() => setRender(false), 300);
+      hideTimeout = setTimeout(() => setRender(false), 500);
     }
     return () => {
       clearTimeout(showTimeout);
@@ -97,14 +97,12 @@ const Drawer = ({
 
   return (
     <div
-      className={`fixed inset-0 z-50 bg-black bg-opacity-60 transition-opacity duration-300 ${responsiveClass} ${
-        visible ? "opacity-100" : "opacity-0"
-      }`}
+      className={`fixed inset-0 z-50 bg-black bg-opacity-60 ${responsiveClass}`}
       onClick={onClose}
     >
       <div className={`min-h-screen flex ${justifyClass} ${itemsClass}`}>
         <div
-          className={`bg-white shadow-xl relative transition-transform duration-300 ease-in-out ${sizeClass} ${
+          className={`bg-white shadow-xl relative transition-transform duration-[900ms] ease-in-out ${sizeClass} ${
             visible ? translateInClass : translateOutClass
           }`}
           onClick={(e) => e.stopPropagation()}

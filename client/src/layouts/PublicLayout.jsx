@@ -1,6 +1,6 @@
 import React from "react";
 
-const Layout = ({ children }) => {
+const PublicLayout = ({ children }) => {
   return (
     <div className="flex justify-center md:px-4 gap-4">
       {/* Left aside (visible on lg and up) */}
@@ -19,4 +19,4 @@ const Layout = ({ children }) => {
   );
 };
 
-export default Layout;
+export default PublicLayout;

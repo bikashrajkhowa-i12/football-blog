@@ -126,8 +126,8 @@ const LandingPage = () => {
       <Divider>
         <Button
           text="🡅 Top"
-          type="button"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          override={true}
           className={`w-20 h-12 font-bold text-gray-400 hover:-translate-y-1 transition duration-[800ms] 
                     bg-gradient-to-t from-sky-200 to-gray-300 rounded-full`}
         />
