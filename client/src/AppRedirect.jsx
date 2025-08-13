@@ -15,7 +15,7 @@ const AppRedirect = () => {
   // TODO: Read these from redux
   // const { role } = useSelector((state) => state.auth); // "admin" or "user"
 
-  const isAdmin = true; // read from backend
+  const isAdmin = false; // read from backend
 
   return (
     <>
