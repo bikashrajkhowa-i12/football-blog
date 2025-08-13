@@ -285,7 +285,7 @@ export const blogs = [
     leagues: [],
     countries: [],
     tournaments: [],
-    image_url: [],
+    image_url: "",
     published: false,
     published_date: "2025-08-03",
     author: "Bkaz",

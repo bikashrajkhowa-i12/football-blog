@@ -17,7 +17,7 @@ const AdminSidebar = ({ closeDrawer = false }) => {
   }));
 
   return (
-    <div className="flex flex-col gap-5 h-full overflow-hidden shadow-lg border border-white rounded-md p-4">
+    <div className="flex flex-col gap-5 h-full overflow-hidden shadow-lg border border-white rounded-md p-4 bg-white">
       <div className="flex flex-col gap-5 items-start p-4 min-h-[50px] shadow-md rounded-md">
         <h1 className="font-extrabold text-4xl text-gray-800">Manage App</h1>
         <div className="flex flex-col justify-start py-2">

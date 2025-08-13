@@ -13,7 +13,7 @@ const Button = (props) => {
   } = props || {};
 
   const variantMap = {
-    primary: "bg-sky-700 text-white",
+    primary: "bg-blue-600 text-white hover:bg-blue-700",
     secondary: "bg-gray-600 text-white",
     success: "bg-green-800 text-white",
     info: "bg-sky-400 text-white",

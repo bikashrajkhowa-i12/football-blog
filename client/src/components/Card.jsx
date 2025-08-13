@@ -4,7 +4,7 @@ const Card = (props) => {
   const { children, className } = props || {};
   return (
     <div
-      className={`rounded-lg p-4 border border-gray-200 
+      className={`rounded-lg md:p-4 border border-gray-200 
         transition duration-200 cursor-pointer h-full ${className}`}
     >
       {children}

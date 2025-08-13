@@ -19,10 +19,10 @@ const Drawer = ({
     let showTimeout, hideTimeout;
     if (isOpen) {
       setRender(true);
-      showTimeout = setTimeout(() => setVisible(true), 10);
+      showTimeout = setTimeout(() => setVisible(true), 20); // ✅ Slightly longer for better paint
     } else {
       setVisible(false);
-      hideTimeout = setTimeout(() => setRender(false), 500);
+      hideTimeout = setTimeout(() => setRender(false), 300); // ✅ Shorter for faster close
     }
     return () => {
       clearTimeout(showTimeout);
@@ -32,7 +32,7 @@ const Drawer = ({
 
   if (!render) return null;
 
-  // Determine flex container alignment and drawer translate classes based on position
+  // Position config
   let justifyClass, itemsClass, translateInClass, translateOutClass, sizeClass;
 
   switch (position) {
@@ -55,14 +55,14 @@ const Drawer = ({
       itemsClass = "items-start";
       translateInClass = "translate-y-0";
       translateOutClass = "-translate-y-full";
-      sizeClass = `w-full ${heightClass}`; // full width, custom height
+      sizeClass = `w-full ${heightClass}`;
       break;
     case "bottom":
       justifyClass = "justify-center";
       itemsClass = "items-end";
       translateInClass = "translate-y-0";
       translateOutClass = "translate-y-full";
-      sizeClass = `w-full ${heightClass}`; // full width, custom height
+      sizeClass = `w-full ${heightClass}`;
       break;
     default:
       justifyClass = "justify-start";
@@ -72,37 +72,27 @@ const Drawer = ({
       sizeClass = `${widthClass} ${heightClass}`;
   }
 
-  // Compose responsive visibility class based on viewScreen prop:
-  // For example:
-  // viewScreen === "hidden" => visible only on small screens => "md:hidden"
-  // viewScreen === "md" => visible on md and above => "hidden md:flex"
-  // viewScreen === "lg" => visible on lg and above => "hidden lg:flex"
-  // Default fallback: "md:hidden"
-  let responsiveClass = "";
-
-  if (["hidden", "md:hidden"].includes(viewScreen)) {
-    responsiveClass = "md:hidden"; // visible only on small screens
-  } else if (viewScreen === "sm") {
-    responsiveClass = "hidden sm:flex";
-  } else if (viewScreen === "md") {
-    responsiveClass = "hidden md:flex";
-  } else if (viewScreen === "lg") {
-    responsiveClass = "hidden lg:flex";
-  } else if (viewScreen === "xl") {
-    responsiveClass = "hidden xl:flex";
-  } else {
-    // fallback
-    responsiveClass = "md:hidden";
-  }
+  // Responsive visibility handling
+  const responsiveMap = {
+    hidden: "md:hidden",
+    "md:hidden": "md:hidden",
+    sm: "hidden sm:flex",
+    md: "hidden md:flex",
+    lg: "hidden lg:flex",
+    xl: "hidden xl:flex",
+  };
+  const responsiveClass = responsiveMap[viewScreen] || "md:hidden";
 
   return (
     <div
-      className={`fixed inset-0 z-50 bg-black bg-opacity-60 ${responsiveClass}`}
+      className={`fixed inset-0 z-50 bg-black/50 ${responsiveClass} transition-opacity duration-300 ${
+        visible ? "opacity-100" : "opacity-0"
+      }`}
       onClick={onClose}
     >
       <div className={`min-h-screen flex ${justifyClass} ${itemsClass}`}>
         <div
-          className={`bg-white shadow-xl relative transition-transform duration-[900ms] ease-in-out ${sizeClass} ${
+          className={`bg-white shadow-xl relative transition-transform duration-300 ease-out ${sizeClass} ${
             visible ? translateInClass : translateOutClass
           }`}
           onClick={(e) => e.stopPropagation()}
