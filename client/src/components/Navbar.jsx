@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 
 import Button from "./Button";
 import Drawer from "./Drawer";
+import { Menu } from "lucide-react";
 
 const Navbar = ({ setShowAuthPanel, isLoggedIn = false }) => {
   const navigate = useNavigate();
@@ -73,11 +74,17 @@ const Navbar = ({ setShowAuthPanel, isLoggedIn = false }) => {
         <nav className="flex items-center justify-between py-3">
           {/* Mobile Menu Button */}
           <div className="w-10 md:hidden">
-            <button
+            {/* <button
               className="mb-[6px] opacity-60 mr-4 text-2xl rounded-md"
               onClick={() => setShowDrawer((v) => !v)}
             >
-              ☰
+              <Menu size={24} />
+            </button> */}
+            <button
+              onClick={() => setShowDrawer((v) => !v)}
+              className="p-1 rounded bg-gray-400 text-white hover:bg-gray-500"
+            >
+              <Menu size={24} />
             </button>
           </div>
 

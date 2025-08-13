@@ -1,24 +1,26 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 
 import AdminLandingPage from "../pages/admin/AdminLandingPage";
-import Dashboard from "../pages/admin/pages/Dashboard";
-import ContentManagement from "../pages/admin/pages/ContentManagement";
-import Users from "../pages/admin/pages/Users";
-import Settings from "../pages/admin/pages/Settings";
+import ContentManagement from "../pages/admin/ContentManagement";
+import Users from "../pages/admin/Users";
+import Settings from "../pages/admin/Settings";
+import ProfilePage from "../pages/profile/ProfilePage";
 
 const AdminRoutes = () => {
   const baseRoute = "/admin";
+  const redirectToBase = <Navigate to={`${baseRoute}/dashboard`} replace />;
   return (
     <Routes>
-      <Route path="/" element={<Navigate to={baseRoute} replace />} />
-      <Route path={`${baseRoute}`} element={<AdminLandingPage />} />
-      <Route path={`${baseRoute}/dashboard`} element={<Dashboard />} />
+      <Route path="/" element={redirectToBase} />
+      <Route path="/admin" element={redirectToBase} />
+      <Route path={`${baseRoute}/dashboard`} element={<AdminLandingPage />} />
       <Route
         path={`${baseRoute}/content-management`}
         element={<ContentManagement />}
       />
       <Route path={`${baseRoute}/users`} element={<Users />} />
       <Route path={`${baseRoute}/settings`} element={<Settings />} />
+      <Route path={`${baseRoute}/profile`} element={<ProfilePage />} />
       <Route path="*" element={<p>404 — Admin Page Not Found</p>} />
     </Routes>
   );

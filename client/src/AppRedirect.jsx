@@ -1,13 +1,13 @@
 import { useState } from "react";
 
+import AdminLayout from "./components/admin/AdminLayout";
 import AdminRoutes from "./routes/AdminRoutes";
+
 import PublicRoutes from "./routes/PublicRoutes";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-
 import AuthPanel from "./components/auth/AuthPanel";
-import PublicLayout from "./layouts/PublicLayout";
-import AdminLayout from "./layouts/AdminLayout";
+import PublicLayout from "./components/PublicLayout";
 
 const AppRedirect = () => {
   const [showAuthPanel, setShowAuthPanel] = useState(false);
@@ -15,9 +15,7 @@ const AppRedirect = () => {
   // TODO: Read these from redux
   // const { role } = useSelector((state) => state.auth); // "admin" or "user"
 
-  // const isAdmin = role === "admin";
-
-  const isAdmin = false; // read from backend
+  const isAdmin = true; // read from backend
 
   return (
     <>

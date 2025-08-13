@@ -2,6 +2,10 @@ export const APP_CONFIG = {
   app_name: "FootScribe90",
   app_domain: "footscribe90.com", //temp domain
 
+  admin: {
+    views: ["dashboard", "content-management", "users", "settings"],
+  },
+
   auth: {
     views: ["login", "signup", "forgot_password"],
     login: {
