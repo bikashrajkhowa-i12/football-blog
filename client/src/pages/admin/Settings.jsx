@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { User, Bell, Settings as Cog, Shield } from "lucide-react";
+import { Bell, Settings as Cog, Shield } from "lucide-react";
 
 const Settings = () => {
-  const [activeTab, setActiveTab] = useState("profile");
+  const [activeTab, setActiveTab] = useState("preferences");
 
   const tabs = [
-    { id: "profile", label: "Profile", icon: <User className="w-4 h-4" /> },
     {
       id: "preferences",
       label: "Preferences",
@@ -43,31 +42,6 @@ const Settings = () => {
 
       {/* Panels */}
       <div className="bg-white shadow rounded-lg p-6">
-        {activeTab === "profile" && (
-          <div className="space-y-4">
-            <h2 className="text-lg font-semibold">Profile Settings</h2>
-            <div>
-              <label className="block text-sm font-medium mb-1">Name</label>
-              <input
-                type="text"
-                className="w-full border rounded-md px-3 py-2 text-sm"
-                placeholder="Enter your name"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-1">Email</label>
-              <input
-                type="email"
-                className="w-full border rounded-md px-3 py-2 text-sm"
-                placeholder="Enter your email"
-              />
-            </div>
-            <button className="px-4 py-2 bg-blue-600 text-white rounded-md">
-              Save Changes
-            </button>
-          </div>
-        )}
-
         {activeTab === "preferences" && (
           <div className="space-y-4">
             <h2 className="text-lg font-semibold">Preferences</h2>

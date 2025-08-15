@@ -21,7 +21,7 @@ const Dashboard = () => {
       value: 328,
       icon: <FileText className="w-6 h-6 text-green-700" />,
       link: "/admin/content-management",
-      gradient: "from-green-300 to-green-200",
+      gradient: "from-green-300 to-green-100",
     },
     {
       id: "views",
@@ -56,7 +56,7 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-1 md:p-6 space-y-6">
       {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {stats.map((stat) => (
@@ -76,7 +76,7 @@ const Dashboard = () => {
       </div>
 
       {/* Recent Activity */}
-      <div className="bg-white shadow-md rounded-xl p-5">
+      <div className="bg-white shadow-md rounded-xl p-1 md:p-5">
         <h2 className="text-lg font-semibold mb-4 text-gray-800">
           Recent Activity
         </h2>

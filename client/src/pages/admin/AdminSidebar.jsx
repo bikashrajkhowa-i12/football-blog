@@ -57,15 +57,14 @@ const AdminSidebar = ({ closeDrawer = false }) => {
           </NavLink>
         ))}
       </nav>
-
       {/* Logout Button pinned to bottom */}
-      <button
+      <span
         onClick={handleLogout}
-        className="flex items-center justify-center gap-2 px-4 py-2 mt-4 bg-white-600 border border-red-700 text-red-700 hover:bg-red-700 hover:text-white rounded-md"
+        className="flex items-center justify-center gap-2 px-4 py-2 mt-4 bg-white-600 border border-red-700 text-red-700 hover:bg-red-700 hover:text-white rounded-md cursor-pointer"
       >
         <LogOut className="w-4 h-4" />
         Logout
-      </button>
+      </span>
     </aside>
   );
 };

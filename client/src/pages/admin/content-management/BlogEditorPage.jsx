@@ -125,15 +125,15 @@ const BlogEditorPage = () => {
       ];
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-1 md:p-6 space-y-6">
       {/* Header */}
-      <div className="flex gap-3 items-center">
+      <div className="flex gap-3 items-center bg-gray-800 text-white rounded-tl-lg rounded-tr-lg p-1">
         <ArrowLeft
           size={26}
           onClick={() => navigate("/admin/content-management")}
-          className="hover:cursor-pointer mt-1"
+          className="hover:cursor-pointer mt-1 bg-transparent"
         />
-        <h1 className="text-2xl font-bold">
+        <h1 className="text-2xl font-semibold">
           {isEditMode ? "Edit Blog Post" : "Create New Blog Post"}
         </h1>
       </div>

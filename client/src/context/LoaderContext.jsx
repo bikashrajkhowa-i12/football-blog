@@ -9,12 +9,12 @@ export const LoaderProvider = ({ children }) => {
     prompt: "Loading...",
   });
 
-  const startLoading = (type = "global") => {
-    setLoaderState({ type, loading: true, prompt: "Loading..." });
+  const startLoading = ({ type = "global", prompt = "Loading..." }) => {
+    setLoaderState({ type, loading: true, prompt });
   };
 
-  const stopLoading = (type = "global") => {
-    setLoaderState({ type, loading: false, prompt: "Loading..." });
+  const stopLoading = ({ type = "global" }) => {
+    setLoaderState({ type, loading: false, prompt });
   };
 
   return (

@@ -29,17 +29,17 @@ const DraftBlogs = () => {
   return (
     <div className="flex flex-col max-w-screen min-h-screen rounded-md bg-gray-100">
       {/* Header */}
-      <header className="flex items-center gap-3 p-6 border-b border-gray-300">
+      <header className="flex items-center gap-3 p-1 md:mt-6 border-b border-gray-300 bg-gray-800 text-white rounded-tl-xl rounded-tr-xl">
         <ArrowLeft
           size={26}
           onClick={() => navigate("/admin/content-management")}
           className="hover:cursor-pointer"
         />
-        <h1 className="text-2xl font-bold text-gray-800">Drafts</h1>
+        <h1 className="text-2xl font-bold">Drafts</h1>
       </header>
 
       {/* Table */}
-      <main className="flex flex-col flex-1 p-5">
+      <main className="flex flex-col flex-1 p-1 md:p-5">
         <ContentTable
           data={mockData}
           currentPage={currentPage}

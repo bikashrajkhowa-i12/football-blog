@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Pagination from "../../../components/admin/Pagination";
+import { FilePenLine, Trash2 } from "lucide-react";
 
 const ContentTable = ({
   data = [],
@@ -46,10 +47,7 @@ const ContentTable = ({
           onChange={handleSortChange}
           className="px-3 py-2 border rounded-md text-sm"
         >
-          <option value="published_date">Sort by Published Date</option>
-          <option value="title">Sort by Title</option>
-          <option value="author">Sort by Author</option>
-          <option value="league">Sort by League</option>
+          <option value="published_date">Published Date</option>
         </select>
 
         {/* Filters */}
@@ -70,7 +68,7 @@ const ContentTable = ({
       {/* Table */}
       <div className="overflow-x-auto w-auto border border-gray-300 rounded-lg bg-white">
         <table className="min-w-full text-sm text-left border-collapse">
-          <thead className="bg-gray-100">
+          <thead className="bg-gray-800 text-white">
             <tr>
               <th className="px-3 py-2 border">Title</th>
               <th className="px-3 py-2 border">League</th>
@@ -108,23 +106,23 @@ const ContentTable = ({
                     {item.published_date || "-"}
                   </td>
                   <td className="px-3 py-2 border">
-                    <button
-                      className="px-2 py-1 text-xs bg-blue-500 text-white rounded mr-2"
-                      onClick={() =>
-                        navigate(
-                          `/admin/content-management/edit/${
-                            item.slug || "dummy123"
-                          }`
-                        )
-                      }
-                    >
-                      Edit
+                    <button className="px-2 py-1 bg-transparent">
+                      <FilePenLine
+                        size={18}
+                        onClick={() =>
+                          navigate(
+                            `/admin/content-management/edit/${
+                              item.slug || "dummy123"
+                            }`
+                          )
+                        }
+                      />
                     </button>
-                    <button
-                      className="px-2 py-1 text-xs bg-red-500 text-white rounded"
-                      onClick={() => ""} // TODO: Delete handler
-                    >
-                      Delete
+                    <button className="px-2 py-1 bg-transparent">
+                      <Trash2
+                        size={18}
+                        onClick={() => ""} // TODO: Delete handler
+                      />
                     </button>
                   </td>
                 </tr>

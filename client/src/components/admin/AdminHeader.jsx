@@ -8,7 +8,7 @@ const AdminHeader = ({ openDrawer }) => {
   const title = getTitleByPath(location.pathname);
 
   return (
-    <header className="flex justify-between items-center p-4 border-b bg-gradient-to-r from-gray-50 to-gray-100 shadow-sm">
+    <header className="flex justify-between items-center px-2 py-4 md:px-4 md:py-4 border-b bg-gradient-to-r from-gray-100 to-gray-300 shadow-sm">
       {/* Left: Title + Drawer */}
       <div className="flex gap-3 items-center">
         {/* Mobile Hamburger */}

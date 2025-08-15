@@ -14,14 +14,14 @@ const Button = (props) => {
 
   const variantMap = {
     primary: "bg-blue-600 text-white hover:bg-blue-700",
-    secondary: "bg-gray-600 text-white",
-    success: "bg-green-800 text-white",
-    info: "bg-sky-400 text-white",
+    secondary: "bg-gray-800 text-white hover:bg-gray-900",
+    success: "bg-green-800 text-white hover:bg-green-900",
+    info: "bg-sky-400 text-white hover:bg-sky-500",
     light: "bg-white text-black border border-gray-400",
-    dark: "bg-black text-white",
-    warning: "bg-yellow-500 text-black",
-    danger: "bg-red-700 text-white",
-    orange: "bg-orange-500 text-white",
+    dark: "bg-black bg-opacity-90 text-white hover:bg-opacity-100",
+    warning: "bg-yellow-500 text-black hover:bg-yellow-600",
+    danger: "bg-red-700 text-white hover:bg-red-800",
+    orange: "bg-orange-500 text-white hover:bg-orange-600",
     // "primary+success": "bg-gradient-to-r from-sky-400 to-green-400 text-white",
   };
 
