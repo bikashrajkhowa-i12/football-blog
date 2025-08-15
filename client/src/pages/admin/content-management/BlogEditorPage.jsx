@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import FormBuilder from "../../components/FormBuilder";
-import Button from "../../components/Button";
+import { useState, useEffect, useCallback } from "react";
+import FormBuilder from "../../../components/FormBuilder";
+import { ArrowLeft } from "lucide-react";
 
 const BlogEditorPage = () => {
   const { id } = useParams();
@@ -16,29 +16,54 @@ const BlogEditorPage = () => {
     tags: "",
   });
 
-  // Fetch existing blog data if edit mode
+  // Fetch blog data in edit mode
   useEffect(() => {
-    if (isEditMode) {
-      // Replace with real API call
-      const fetchData = async () => {
-        const dummy = {
-          title: "Sample Blog",
-          author: "John Doe",
-          category: "Premier League",
-          content: "Some existing blog content...",
-          tags: "football, premier league",
-        };
-        setFormData(dummy);
+    if (!isEditMode) return;
+
+    const fetchData = async () => {
+      // Replace with API call
+      const dummy = {
+        title: "Sample Blog",
+        author: "John Doe",
+        category: "Premier League",
+        content: "Some existing blog content...",
+        tags: "football, premier league",
       };
-      fetchData();
-    }
+      setFormData(dummy);
+    };
+
+    fetchData();
   }, [isEditMode]);
+
+  const resetForm = () => {
+    setFormData({
+      title: "",
+      author: "",
+      category: "",
+      content: "",
+      tags: "",
+    });
+  };
+
+  const handleSubmit = useCallback(
+    (data) => {
+      if (isEditMode) {
+        console.log("Updating blog:", data);
+        // API call to update blog
+      } else {
+        console.log("Creating blog:", data);
+        // API call to create blog
+      }
+      navigate("/admin/content-management");
+    },
+    [isEditMode, navigate]
+  );
 
   const fields = [
     {
       label: "Title",
       name: "title",
-      placeholder: "start typing...",
+      placeholder: "Enter blog title...",
       type: "text",
       required: true,
       value: formData.title,
@@ -48,7 +73,7 @@ const BlogEditorPage = () => {
     {
       label: "Author",
       name: "author",
-      placeholder: "start typing...",
+      placeholder: "Enter author name...",
       type: "text",
       value: formData.author,
       controlled: true,
@@ -57,7 +82,7 @@ const BlogEditorPage = () => {
     {
       label: "Category",
       name: "category",
-      placeholder: "start typing...",
+      placeholder: "Select a category...",
       type: "select",
       value: formData.category,
       controlled: true,
@@ -72,7 +97,7 @@ const BlogEditorPage = () => {
     {
       label: "Content",
       name: "content",
-      placeholder: "start typing...",
+      placeholder: "Write your blog content here...",
       type: "textarea",
       value: formData.content,
       controlled: true,
@@ -82,7 +107,7 @@ const BlogEditorPage = () => {
       label: "Tags (comma separated)",
       name: "tags",
       type: "text",
-      placeholder: "start typing...",
+      placeholder: "e.g. football, premier league",
       value: formData.tags,
       controlled: true,
       onChange: (e) => setFormData({ ...formData, tags: e.target.value }),
@@ -91,54 +116,34 @@ const BlogEditorPage = () => {
 
   const buttons = isEditMode
     ? [
-        {
-          label: "Update",
-          type: "submit",
-          className: "bg-blue-600 text-white px-4 py-2 rounded",
-        },
-        {
-          label: "Reset",
-          onClick: () => window.location.reload(),
-          className: "bg-gray-400 text-white px-4 py-2 rounded",
-        },
+        { label: "Reset", onClick: resetForm, variant: "secondary" },
+        { label: "Update", type: "submit", variant: "primary" },
       ]
     : [
-        {
-          label: "Create",
-          type: "submit",
-          className: "bg-green-600 text-white px-4 py-2 rounded",
-        },
+        { label: "Save draft", type: "submit", variant: "danger" },
+        { label: "Create and Publish", type: "submit", variant: "success" },
       ];
-
-  const handleSubmit = (data) => {
-    if (isEditMode) {
-      console.log("Updating blog:", data);
-      // API call to update blog
-    } else {
-      console.log("Creating blog:", data);
-      // API call to create blog
-    }
-    navigate("/admin/content-management");
-  };
 
   return (
     <div className="p-6 space-y-6">
-      {/* Back Button */}
-      <Button
-        text="← Back"
-        className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-1 rounded"
-        onClick={() => navigate("/admin/content-management")}
-      />
+      {/* Header */}
+      <div className="flex gap-3 items-center">
+        <ArrowLeft
+          size={26}
+          onClick={() => navigate("/admin/content-management")}
+          className="hover:cursor-pointer mt-1"
+        />
+        <h1 className="text-2xl font-bold">
+          {isEditMode ? "Edit Blog Post" : "Create New Blog Post"}
+        </h1>
+      </div>
 
-      <h1 className="text-2xl font-bold">
-        {isEditMode ? "Edit Blog Post" : "Create New Blog Post"}
-      </h1>
-
+      {/* Form */}
       <FormBuilder
         fields={fields}
         buttons={buttons}
         onSubmit={handleSubmit}
-        formClassName="col"
+        formClassName="flex flex-col gap-4"
       />
     </div>
   );

@@ -1,5 +1,5 @@
 import React from "react";
-import { Menu } from "lucide-react";
+import { Menu, Search, Bell } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import { getTitleByPath } from "../../pages/admin/helper";
 
@@ -8,26 +8,44 @@ const AdminHeader = ({ openDrawer }) => {
   const title = getTitleByPath(location.pathname);
 
   return (
-    <div className="flex justify-between items-center p-4 border-b bg-gray-100 shadow-sm rounded-md mb-2">
-      <div className="flex gap-2 items-center">
-        {/* Mobile Hamburger*/}
+    <header className="flex justify-between items-center p-4 border-b bg-gradient-to-r from-gray-50 to-gray-100 shadow-sm">
+      {/* Left: Title + Drawer */}
+      <div className="flex gap-3 items-center">
+        {/* Mobile Hamburger */}
         <button
           onClick={openDrawer}
-          className="md:hidden p-1 text-gray-800 bg-gray-300 rounded-md"
+          className="md:hidden p-2 rounded-lg bg-gray-200 hover:bg-gray-300 transition-colors"
           aria-label="Open sidebar"
         >
-          <Menu size={28} />
+          <Menu size={22} className="text-gray-700" />
         </button>
-        <div className="flex flex-col">
-          <h1 className="text-2xl text-gray-700 font-bold">{title}</h1>
-          <p className="text-sm text-gray-500">Overview of recent activity</p>
+
+        {/* Page Title */}
+        <div>
+          <h1 className="text-xl font-semibold text-gray-800">{title}</h1>
+          <p className="text-xs text-gray-500">
+            Stay updated with latest activity
+          </p>
         </div>
       </div>
-      <div className="flex items-center space-x-4">
-        <button className="p-2 rounded-full hover:bg-gray-100">🔍</button>
-        <button className="p-2 rounded-full hover:bg-gray-100">🔔</button>
+
+      {/* Right: Actions */}
+      <div className="flex items-center gap-3">
+        <button
+          className="p-2 rounded-full hover:bg-gray-200 transition-colors"
+          aria-label="Search"
+        >
+          <Search size={20} className="text-gray-600" />
+        </button>
+        <button
+          className="relative p-2 rounded-full hover:bg-gray-200 transition-colors"
+          aria-label="Notifications"
+        >
+          <Bell size={20} className="text-gray-600" />
+          <span className="absolute top-1 right-1 h-2 w-2 bg-red-500 rounded-full"></span>
+        </button>
       </div>
-    </div>
+    </header>
   );
 };
 

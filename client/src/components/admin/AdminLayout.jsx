@@ -6,20 +6,21 @@ const AdminLayout = ({ children }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   return (
-    <div className="flex justify-center max-w-screen min-h-screen bg-gray-300">
-      {/* Sidebar + Drawer */}
+    <div className="flex min-h-screen w-full bg-gray-100">
+      {/* Sidebar / Drawer */}
       <AdminSidebarWrapper
         isDrawerOpen={isDrawerOpen}
         setIsDrawerOpen={setIsDrawerOpen}
       />
 
-      {/* Main Content */}
-      <section className="block max-w-screen-xl mx-auto w-full h-full p-2 md:ml-[350px] overflow-hidden">
+      {/* Main Content Area */}
+      <div className="flex-1 flex flex-col md:ml-[350px] max-w-screen-xl w-full mx-auto">
         <AdminHeader openDrawer={() => setIsDrawerOpen(true)} />
-        <div className="min-h-screen p-2 bg-gray-100 rounded-md">
+
+        <main className="flex-1 p-4 bg-white rounded-lg shadow-sm overflow-y-auto">
           {children}
-        </div>
-      </section>
+        </main>
+      </div>
     </div>
   );
 };

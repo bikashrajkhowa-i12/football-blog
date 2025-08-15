@@ -1,30 +1,32 @@
 import React from "react";
 import Button from "../../components/Button";
-
 import FormBuilder from "../../components/FormBuilder";
 import defaultAvatar from "./user-profile-logo.png";
 
 const ProfilePage = () => {
   return (
-    <div className="max-w-4xl mx-auto w-full flex flex-col gap-16 py-10 px-8">
-      {/* Avatar */}
-      <div className="flex flex-col justify-center items-center">
-        <div className="relative w-[100px] h-[100px] rounded-full overflow-hidden flex justify-center items-center">
+    <div className="max-w-5xl mx-auto w-full flex flex-col gap-12 py-10 px-6">
+      {/* Profile Header */}
+      <div className="flex flex-col items-center gap-4 p-8 bg-white rounded-2xl shadow-md">
+        {/* Avatar */}
+        <div className="relative w-[120px] h-[120px] rounded-full overflow-hidden border-4 border-gray-200 shadow-sm">
           <img
             src={defaultAvatar}
             className="w-full h-full object-cover"
-            alt="Default Profile Avatar"
+            alt="Profile Avatar"
           />
         </div>
-        <div className="cursor-not-allowed opacity-50 pb-8">
+        <div className="text-sm text-gray-500 cursor-not-allowed opacity-60">
           Edit Profile Picture ✏️
         </div>
-        <Button text="Update" variant="success" />
+        <Button text="Update Profile" variant="success" />
       </div>
 
       {/* Personal Info */}
-      <div className="flex flex-col w-full max-w-xl mx-auto gap-8">
-        <h1 className="text-xl font-bold mb-4 text-gray-800">Personal info</h1>
+      <div className="bg-white rounded-2xl shadow-md p-8">
+        <h1 className="text-2xl font-semibold mb-6 text-gray-800 border-b pb-2">
+          Personal Information
+        </h1>
         <FormBuilder
           fields={[
             {
@@ -37,47 +39,41 @@ const ProfilePage = () => {
               label: "Nickname",
               name: "nickname",
               type: "text",
-              placeholder: "Enter your nick-name",
+              placeholder: "Enter your nickname",
             },
             {
               label: "Bio",
               name: "bio",
               type: "textarea",
-              placeholder: "Enter your bio",
+              placeholder: "Write something about yourself...",
             },
           ]}
           buttons={[
-            {
-              label: "Reset",
-              type: "button",
-              variant: "secondary",
-            },
-            {
-              label: "Save",
-              type: "submit",
-              variant: "success",
-            },
+            { label: "Reset", type: "button", variant: "secondary" },
+            { label: "Save", type: "submit", variant: "success" },
           ]}
         />
       </div>
 
       {/* Account Info */}
-      <div className="flex flex-col w-full max-w-xl mx-auto gap-8">
-        <h1 className="text-xl font-bold mb-4 text-gray-800">Account info</h1>
+      <div className="bg-white rounded-2xl shadow-md p-8">
+        <h1 className="text-2xl font-semibold mb-6 text-gray-800 border-b pb-2">
+          Account Settings
+        </h1>
         <FormBuilder
           fields={[
             {
               label: "Current Email",
               name: "current_email",
               type: "email",
-              defaultValue: "dummy@123.gmail.com", //TODO: take it from backend api
+              defaultValue: "dummy@123.gmail.com", // TODO: fetch from API
               disabled: true,
             },
             {
               label: "Current Password",
               name: "current_password",
               type: "password",
-              defaultValue: "dummy@123.gmail.com", //TODO: take it from backend api
+              defaultValue: "********",
               disabled: true,
             },
             {
@@ -87,23 +83,15 @@ const ProfilePage = () => {
               placeholder: "Enter your new email",
             },
             {
-              label: "New Email Password",
+              label: "New Password",
               name: "new_password",
               type: "password",
-              placeholder: "Enter your new email's password",
+              placeholder: "Enter a new password",
             },
           ]}
           buttons={[
-            {
-              label: "Reset",
-              type: "button",
-              variant: "secondary",
-            },
-            {
-              label: "Save",
-              type: "submit",
-              variant: "success",
-            },
+            { label: "Reset", type: "button", variant: "secondary" },
+            { label: "Save", type: "submit", variant: "success" },
           ]}
         />
       </div>
