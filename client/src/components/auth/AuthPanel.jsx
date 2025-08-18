@@ -38,7 +38,11 @@ const AuthPanel = (props) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} title={config?.title}>
       {displayPrompt()}
-      <DisplayComp authView={authView} onSwitchView={onSwitchView} />
+      <DisplayComp
+        authView={authView}
+        onSwitchView={onSwitchView}
+        onClose={onClose}
+      />
     </Modal>
   );
 };

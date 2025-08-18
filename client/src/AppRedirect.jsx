@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
-import { useLoaderContext } from "./context/LoaderContext";
+import { useLoader } from "./context/LoaderContext";
 
 import AdminLayout from "./components/admin/AdminLayout";
 import AdminRoutes from "./routes/AdminRoutes";
@@ -13,7 +13,7 @@ import AuthPanel from "./components/auth/AuthPanel";
 import PublicLayout from "./components/PublicLayout";
 
 const AppRedirect = () => {
-  const { startLoading, stopLoading } = useLoaderContext();
+  const { startLoading, stopLoading } = useLoader();
   const [showAuthPanel, setShowAuthPanel] = useState(false);
   const switchShowAuthPanel = (value) => setShowAuthPanel(value);
 

@@ -17,6 +17,11 @@ const FormBuilder = (props) => {
       placeholder = "",
       attributes = {},
       className = "",
+      controlled = false,
+      value,
+      checked,
+      onChange,
+      ...restField
     } = field || {};
 
     const inputElementClass = `w-full text-base rounded-md p-2 ring-[0.3px] ring-gray-400 opacity-70 
@@ -44,12 +49,12 @@ const FormBuilder = (props) => {
               id={id}
               name={id}
               type="checkbox"
-              checked={field.controlled ? field.checked : undefined}
-              defaultChecked={!field.controlled ? field.checked : undefined}
-              onChange={field.controlled ? field.onChange : undefined}
+              checked={controlled ? field.checked : undefined}
+              defaultChecked={!controlled ? field.checked : undefined}
+              onChange={controlled ? field.onChange : undefined}
               required={required}
               className="w-[14.5px] h-[14.5px] mt-0.5 accent-green-800 rounded cursor-pointer"
-              {...field}
+              {...restField}
               {...attributes}
             />
             <span className="text-gray-600 text-sm">{label}</span>
@@ -61,12 +66,12 @@ const FormBuilder = (props) => {
           <select
             id={id}
             name={id}
-            value={field.controlled ? field.value : undefined}
-            defaultValue={!field.controlled ? field.value : undefined}
-            onChange={field.controlled ? field.onChange : undefined}
+            value={controlled ? field.value : undefined}
+            defaultValue={!controlled ? field.value : undefined}
+            onChange={controlled ? field.onChange : undefined}
             required={required}
             className={inputElementClass}
-            {...field}
+            {...restField}
             {...attributes}
           >
             {field.options?.map((opt) => {
@@ -86,13 +91,13 @@ const FormBuilder = (props) => {
           <textarea
             id={id}
             name={id}
-            value={field.controlled ? field.value : undefined}
-            defaultValue={!field.controlled ? field.value : undefined}
-            onChange={field.controlled ? field.onChange : undefined}
+            value={controlled ? field.value : undefined}
+            defaultValue={!controlled ? field.value : undefined}
+            onChange={controlled ? field.onChange : undefined}
             required={required}
             placeholder={placeholder}
             className={inputElementClass}
-            {...field}
+            {...restField}
             {...attributes}
           />
         );
@@ -119,13 +124,13 @@ const FormBuilder = (props) => {
             id={id}
             name={id}
             type={type}
-            value={field.controlled ? field.value : undefined}
-            defaultValue={!field.controlled ? field.value : undefined}
-            onChange={field.controlled ? field.onChange : undefined}
+            value={controlled ? field.value : undefined}
+            defaultValue={!controlled ? field.value : undefined}
+            onChange={controlled ? field.onChange : undefined}
             required={required}
             placeholder={placeholder}
             className={inputElementClass}
-            {...field}
+            {...restField}
             {...attributes}
           />
         );

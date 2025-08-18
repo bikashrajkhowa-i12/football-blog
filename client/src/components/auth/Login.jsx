@@ -1,36 +1,84 @@
 import FormBuilder from "../FormBuilder";
-import Button from "../Button";
 import Divider from "../Divider";
-import { demoAlert } from "../../demo/alerts";
+import GoogleButton from "../GoogleButton";
+import { isEmpty } from "lodash";
+import callApi from "../../api/callApi";
+import { useState } from "react";
+import Alert from "../Alert";
+import { useLoader } from "../../context/LoaderContext";
+import { useToast } from "../../context/ToastContext";
 
 const Login = (props) => {
-  const { onSwitchView } = props || {};
+  const { onSwitchView, onClose = () => "" } = props || {};
+  const [error, setError] = useState(null);
+  const { startLoading, stopLoading } = useLoader();
+  const { addToast } = useToast();
 
-  const onSubmit = (data) => {
-    console.log("FormData: ", data);
-    alert(demoAlert(data.email));
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    remember_me: false,
+  });
+
+  const onClickLogin = async (data) => {
+    if (isEmpty(data)) return;
+
+    setError(null);
+    startLoading({ type: "global", prompt: "Logging you in..." });
+    try {
+      const response = await callApi({
+        method: "POST",
+        url: "/api/auth/login",
+        data: data,
+      });
+
+      //TODO: set response object redux for usage
+      console.log("user: ", response);
+      addToast({ type: "success", message: "Welcome Back!" });
+      onClose(); //close the modal
+    } catch (error) {
+      setError(error.message || "Invalid credentials! Try again...");
+    } finally {
+      stopLoading({ type: "global" });
+    }
   };
 
   const fields = [
     {
       type: "email",
-      // label: "E-mail",
       name: "email",
+      value: formData.email,
+      controlled: true,
+      onChange: (e) => {
+        setError(null);
+        setFormData({ ...formData, email: e.target.value });
+      },
       required: true,
       placeholder: "E-mail",
     },
     {
       type: "password",
-      // label: "Password",
       name: "password",
+      value: formData.password,
+      controlled: true,
+      onChange: (e) => {
+        setError(null);
+        setFormData({ ...formData, password: e.target.value });
+      },
       required: true,
       placeholder: "Password",
     },
     {
       type: "checkbox",
       label: "Remember me",
-      name: "rememberMe",
+      name: "remember_me",
       required: false,
+      value: formData.remember_me,
+      controlled: true,
+      onChange: (e) => {
+        setError(null);
+        setFormData({ ...formData, remember_me: e.target.checked });
+      },
     },
   ];
 
@@ -72,10 +120,11 @@ const Login = (props) => {
 
   return (
     <div className="flex flex-col w-full gap-5">
-      <FormBuilder fields={fields} buttons={buttons} onSubmit={onSubmit} />
+      {error && <Alert type="error" message={error} />}
+      <FormBuilder fields={fields} buttons={buttons} onSubmit={onClickLogin} />
       {forgotPassword()}
       <Divider text="Or" />
-      <Button text="Login with Google" name="google" onClick={() => ""} />
+      <GoogleButton />
       {signUp()}
     </div>
   );

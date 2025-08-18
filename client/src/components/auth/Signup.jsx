@@ -1,44 +1,80 @@
+import { useState } from "react";
+import { isEmpty } from "lodash";
+
+import callApi from "../../api/callApi";
+import { useLoader } from "../../context/LoaderContext";
+import { useToast } from "../../context/ToastContext";
+
 import Divider from "../Divider";
-import Button from "../Button";
 import FormBuilder from "../FormBuilder";
-import { demoAlert } from "../../demo/alerts";
+import GoogleButton from "../GoogleButton";
+import Alert from "../Alert";
 
 const Signup = (props) => {
-  const { onSwitchView } = props || {};
+  const { onSwitchView, onClose = () => "" } = props || {};
+  const [error, setError] = useState(null);
+  const { startLoading, stopLoading } = useLoader();
+  const { addToast } = useToast();
 
-  const onSubmit = (data) => {
-    console.log("FormData: ", data);
-    alert(demoAlert(data.name));
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    confirm_password: "",
+  });
+
+  const onSubmit = async (data) => {
+    if (isEmpty(data)) return;
+
+    setError(null);
+    startLoading({ type: "global", prompt: "Setting up your account..." });
+    try {
+      const response = await callApi({
+        method: "POST",
+        url: "/api/auth/signup",
+        data: data,
+      });
+
+      console.log("response: ", response);
+      addToast({
+        type: "success",
+        message: `🎉 Signup successful! Welcome aboard!`,
+      });
+      onClose();
+    } catch (error) {
+      setError(error.message || "Failed to sign-up");
+    } finally {
+      stopLoading({ type: "global" });
+    }
   };
 
   const fields = [
     {
-      type: "text",
-      // label: "E-mail",
-      name: "name",
-      required: true,
-      placeholder: "Name",
-    },
-    {
       type: "email",
-      // label: "E-mail",
       name: "email",
       required: true,
       placeholder: "E-mail",
+      value: formData.email,
+      controlled: true,
+      onChange: (e) => setFormData({ ...formData, email: e.target.value }),
     },
     {
       type: "password",
-      // label: "Password",
       name: "password",
       required: true,
       placeholder: "Create Password",
+      value: formData.password,
+      controlled: true,
+      onChange: (e) => setFormData({ ...formData, password: e.target.value }),
     },
     {
       type: "password",
-      // label: "Password",
       name: "confirm_password",
       required: true,
       placeholder: "Confirm Password",
+      value: formData.confirm_password,
+      controlled: true,
+      onChange: (e) =>
+        setFormData({ ...formData, confirm_password: e.target.value }),
     },
   ];
 
@@ -67,9 +103,15 @@ const Signup = (props) => {
 
   return (
     <div className="flex flex-col w-full gap-5">
-      <FormBuilder fields={fields} buttons={buttons} onSubmit={onSubmit} />
+      {error && <Alert type="error" message={error} />}
+      <FormBuilder
+        fields={fields}
+        buttons={buttons}
+        onSubmit={onSubmit}
+        formClassName="flex flex-col gap-4"
+      />
       <Divider text="Or" />
-      <Button text="Sign up with Google" name="google" onClick={() => ""} />
+      <GoogleButton />
       {login()}
     </div>
   );
