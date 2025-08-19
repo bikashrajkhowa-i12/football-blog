@@ -37,7 +37,7 @@ const GlobalLoader = ({ loading = false, prompt = "Loading..." }) => {
         className="w-12 h-12 md:w-20 md:h-20 border-4 border-white border-t-transparent rounded-full animate-spin"
         aria-hidden="true"
       />
-      <p className="text-sky-500">{prompt}</p>
+      <p className="text-sky-500">{prompt || "Loading..."}</p>
     </div>
   );
 };

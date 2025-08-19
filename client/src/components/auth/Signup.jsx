@@ -7,7 +7,7 @@ import { useToast } from "../../context/ToastContext";
 
 import Divider from "../Divider";
 import FormBuilder from "../FormBuilder";
-import GoogleButton from "../GoogleButton";
+import GoogleButton from "./GoogleButton";
 import Alert from "../Alert";
 
 const Signup = (props) => {
@@ -30,7 +30,7 @@ const Signup = (props) => {
     try {
       const response = await callApi({
         method: "POST",
-        url: "/api/auth/signup",
+        url: "/auth/signup",
         data: data,
       });
 
@@ -55,7 +55,10 @@ const Signup = (props) => {
       placeholder: "E-mail",
       value: formData.email,
       controlled: true,
-      onChange: (e) => setFormData({ ...formData, email: e.target.value }),
+      onChange: (e) => {
+        setError(null);
+        setFormData({ ...formData, email: e.target.value });
+      },
     },
     {
       type: "password",
@@ -64,7 +67,10 @@ const Signup = (props) => {
       placeholder: "Create Password",
       value: formData.password,
       controlled: true,
-      onChange: (e) => setFormData({ ...formData, password: e.target.value }),
+      onChange: (e) => {
+        setError(null);
+        setFormData({ ...formData, password: e.target.value });
+      },
     },
     {
       type: "password",
@@ -73,8 +79,10 @@ const Signup = (props) => {
       placeholder: "Confirm Password",
       value: formData.confirm_password,
       controlled: true,
-      onChange: (e) =>
-        setFormData({ ...formData, confirm_password: e.target.value }),
+      onChange: (e) => {
+        setError(null);
+        setFormData({ ...formData, confirm_password: e.target.value });
+      },
     },
   ];
 
@@ -111,7 +119,7 @@ const Signup = (props) => {
         formClassName="flex flex-col gap-4"
       />
       <Divider text="Or" />
-      <GoogleButton />
+      <GoogleButton setError={setError} onClose={onClose} />
       {login()}
     </div>
   );

@@ -1,29 +1,26 @@
+// api/callApi.js
 import axios from "axios";
 
-const API_BASE_URL = process.env.APP_BASE_URL || "http://localhost:5000";
+const apiClient = axios.create({
+  baseURL: "/api",
+  headers: { "Content-Type": "application/json" },
+  withCredentials: true, // send cookies (refresh token)
+});
 
-const callApi = async ({
-  method = "GET",
-  url,
-  data = {},
-  params = {},
-  headers = {},
-}) => {
+const callApi = async ({ method = "GET", url, data, params, headers }) => {
   try {
-    const response = await axios({
+    const response = await apiClient({
       method,
-      url: `${API_BASE_URL}${url}`,
+      url,
       data,
       params,
-      headers: {
-        "Content-Type": "application/json",
-        ...headers,
-      },
+      headers,
     });
     return response.data;
   } catch (error) {
-    console.error("API Error:", error.response?.data || error.message);
-    throw error.response?.data || error;
+    const message =
+      error.response?.data?.message || error.message || "API Error";
+    throw new Error(message);
   }
 };
 

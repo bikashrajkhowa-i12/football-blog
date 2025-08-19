@@ -1,23 +1,13 @@
-const jwt = require("jsonwebtoken");
-
-const { User } = require("../../modals/index");
+const {
+  generateAuthTokens,
+  verifyGoogleToken,
+  verifyRefreshToken,
+  generateToken,
+} = require("./jwt-service");
+const { findUserByEmail, createUser } = require("./common-service");
 const { verifyPassword, hashPassword } = require("./password.service");
-
-const findUserByEmail = async (email) => {
-  try {
-    return await User.findOne({ where: { email } });
-  } catch (error) {
-    throw error;
-  }
-};
-
-const createUser = async (data) => {
-  try {
-    return await User.create(data);
-  } catch (error) {
-    throw error;
-  }
-};
+const authDto = require("../../dtos/auth.dto");
+const { extractFields } = require("./helper");
 
 const login = async ({ email, password }) => {
   try {
@@ -31,21 +21,9 @@ const login = async ({ email, password }) => {
       throw new Error("Invalid email or password.");
     }
 
-    return {
-      id: user.id,
-      email: user.email,
-      role: user.role,
-      status: user.status,
-      name: user.name,
-    };
+    const authTokens = generateAuthTokens(user);
 
-    // Issue token
-    // const token = jwt.sign(
-    //   { id: user.id, isAdmin: user.isAdmin },
-    //   process.env.JWT_SECRET,
-    //   { expiresIn: "1d" }
-    // );
-    // return { user, token };
+    return { user: extractFields(user), ...authTokens };
   } catch (error) {
     throw error;
   }
@@ -60,12 +38,41 @@ const signup = async (data) => {
       );
 
     const hashedPassword = await hashPassword(data.password);
-    const { id, name, username, email, role, status } = await createUser({
-      ...data,
-      password: hashedPassword,
-    });
+    const user = await createUser({ ...data, password: hashedPassword });
+    const authTokens = generateAuthTokens(user);
 
-    return { id, name, username, email, role, status };
+    return { user: extractFields(user), ...authTokens };
+  } catch (error) {
+    throw error;
+  }
+};
+
+const authenticateWithGoogle = async (credential) => {
+  try {
+    const payload = await verifyGoogleToken(credential);
+    let user = await findUserByEmail(payload.email);
+
+    if (!user) {
+      const userDto = new authDto.GoogleAuth(payload);
+      user = await createUser(userDto);
+    }
+
+    const authTokens = generateAuthTokens(user);
+
+    return { user: extractFields(user), ...authTokens };
+  } catch (error) {
+    throw error;
+  }
+};
+
+const renewAuthTokens = async (token) => {
+  try {
+    const decoded = verifyRefreshToken(token);
+    const user = await findUserByEmail(decoded.id);
+    if (!user)
+      throw new Error("User doesn't exist for with the refresh token!");
+
+    return generateToken(user);
   } catch (error) {
     throw error;
   }
@@ -74,4 +81,6 @@ const signup = async (data) => {
 module.exports = {
   login,
   signup,
+  authenticateWithGoogle,
+  renewAuthTokens,
 };

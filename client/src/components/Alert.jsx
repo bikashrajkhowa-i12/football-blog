@@ -1,19 +1,19 @@
-import { CheckCircle2, CircleAlert, AlertTriangle, Info } from "lucide-react";
+import { AlertTriangle, Info, BadgeCheck, CircleX } from "lucide-react";
 
 const Alert = ({ type = "info", message }) => {
   const styles = {
     success: {
       bg: "bg-green-50",
-      border: "border-green-400",
-      text: "text-green-700",
-      Icon: CheckCircle2,
+      border: "border-green-700",
+      text: "text-green-800",
+      Icon: BadgeCheck,
       defaultMsg: "Action completed successfully.",
     },
     error: {
       bg: "bg-red-50",
       border: "border-red-400",
       text: "text-red-700",
-      Icon: CircleAlert,
+      Icon: CircleX,
       defaultMsg: "Something went wrong. Please try again.",
     },
     warning: {
@@ -24,9 +24,9 @@ const Alert = ({ type = "info", message }) => {
       defaultMsg: "Be careful. There might be an issue.",
     },
     info: {
-      bg: "bg-blue-50",
-      border: "border-blue-400",
-      text: "text-blue-700",
+      bg: "bg-sky-50",
+      border: "border-sky-300",
+      text: "text-sky-400",
       Icon: Info,
       defaultMsg: "Here’s some information for you.",
     },
@@ -36,10 +36,10 @@ const Alert = ({ type = "info", message }) => {
 
   return (
     <div
-      className={`w-full max-w-md mx-auto rounded-lg ${bg} ${border} ${text} px-4 py-3 shadow-sm`}
+      className={`w-full max-w-md mx-auto rounded-lg ${bg} ${border} ${text} p-2 border-[1px] shadow-sm`}
     >
       <p className="text-sm font-medium flex items-center gap-2">
-        <Icon className="w-4 h-4" />
+        <Icon size={20} />
         {message || defaultMsg}
       </p>
     </div>

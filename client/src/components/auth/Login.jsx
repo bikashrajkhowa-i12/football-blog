@@ -1,6 +1,6 @@
 import FormBuilder from "../FormBuilder";
 import Divider from "../Divider";
-import GoogleButton from "../GoogleButton";
+import GoogleButton from "./GoogleButton";
 import { isEmpty } from "lodash";
 import callApi from "../../api/callApi";
 import { useState } from "react";
@@ -28,7 +28,7 @@ const Login = (props) => {
     try {
       const response = await callApi({
         method: "POST",
-        url: "/api/auth/login",
+        url: "/auth/login",
         data: data,
       });
 
@@ -124,7 +124,7 @@ const Login = (props) => {
       <FormBuilder fields={fields} buttons={buttons} onSubmit={onClickLogin} />
       {forgotPassword()}
       <Divider text="Or" />
-      <GoogleButton />
+      <GoogleButton setError={setError} onClose={onClose} />
       {signUp()}
     </div>
   );

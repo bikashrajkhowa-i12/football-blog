@@ -1,24 +1,34 @@
-class Signup {
-  constructor({ email, password }) {
-    const normalizedEmail = email.trim().toLowerCase();
-
-    this.email = normalizedEmail;
-    this.password = password; // hashing in service
-    this.username = this.generateUsername(normalizedEmail);
-    this.role =
-      process.env.ADMIN_MAIL?.toLowerCase() === normalizedEmail
-        ? "admin"
-        : "user";
-    this.status = "active";
+class UserBase {
+  constructor(email) {
+    this.email = email;
+    this.username = this.generateUsername(email);
   }
 
   generateUsername(email) {
-    if (process.env.ADMIN_MAIL?.toLowerCase() === email) return "admin";
-
     const prefix = email.split("@")[0];
     const uniqueSuffix = Math.random().toString(36).substring(2, 8);
     return `${prefix.toLowerCase()}_${uniqueSuffix}`;
   }
 }
 
-module.exports = { Signup };
+class Signup extends UserBase {
+  constructor({ email, password }) {
+    super(email.trim().toLowerCase());
+    this.password = password;
+    this.role = "user";
+    this.status = "active";
+  }
+}
+
+class GoogleAuth extends UserBase {
+  constructor({ name, email, picture, sub }) {
+    super(email);
+    this.avatar_url = picture;
+    this.name = name;
+    this.provider = "google";
+    this.provider_id = sub;
+    this.role = "user";
+  }
+}
+
+module.exports = { Signup, GoogleAuth };
