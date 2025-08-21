@@ -9,9 +9,7 @@ const PublicRoutes = () => {
     <Routes>
       <Route path="/" element={<Navigate to={"/home"} replace />} />
       <Route path="/home" element={<LandingPage />} />
-
-      {/** route -> /blog/`${slug}-${blog_id}`  */}
-      <Route path="/blog/:slugWithId" element={<BlogPost />} />
+      <Route path="/blog/:slug" element={<BlogPost />} />
       <Route path="/profile" element={<ProfilePage />} />
       <Route path="*" element={<p>404 — Page Not Found</p>} />
     </Routes>

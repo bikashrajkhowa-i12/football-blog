@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CircleUserRound } from "lucide-react";
 
 import { useAuth } from "../../context/auth/AuthContext";
@@ -7,26 +7,22 @@ import Button from "../../components/Button";
 import FormBuilder from "../../components/FormBuilder";
 
 const ProfilePage = () => {
-  const {
-    avatar_url = "",
-    name = "",
-    username = "",
-    email = "",
-  } = useAuth().user;
+  const { user = {} } = useAuth();
 
-  const [personalInfo, setPersonalInfo] = useState({
-    name: name || "",
-    username: username || "",
-    bio: "",
-  });
+  const [personalInfo, setPersonalInfo] = useState({});
+  const [accountInfo, setAccountInfo] = useState({});
 
-  const [accountInfo, setAccountInfo] = useState({
-    email: email || "",
-    password: "************",
-    new_email: "",
-    new_password: "",
-    confirm_new_password: "",
-  });
+  useEffect(() => {
+    setPersonalInfo({
+      name: user?.name || "",
+      username: user?.username || "",
+      bio: "",
+    });
+    setAccountInfo({
+      email: user?.email || "",
+      update_password: "",
+    });
+  }, [user]);
 
   return (
     <div className="max-w-5xl mx-auto w-full flex flex-col gap-12 py-12 px-6">
@@ -34,9 +30,9 @@ const ProfilePage = () => {
       <div className="flex flex-col items-center gap-5 p-4 rounded-2xl shadow-lg bg-gradient-to-b from-gray-50 to-white">
         {/* Avatar */}
         <div className="relative w-[130px] h-[130px] rounded-full overflow-hidden border-4 border-gray-300 shadow-md">
-          {avatar_url ? (
+          {user?.avatar_url ? (
             <img
-              src={avatar_url}
+              src={user?.avatar_url}
               className="w-full h-full object-cover"
               alt="Profile Avatar"
             />
@@ -124,28 +120,8 @@ const ProfilePage = () => {
                 setAccountInfo({ ...accountInfo, email: e.target.value }),
             },
             {
-              label: "Current Password",
-              name: "password",
-              type: "password",
-              disabled: true,
-              value: accountInfo.password,
-              controlled: true,
-              onChange: (e) =>
-                setAccountInfo({ ...accountInfo, password: e.target.value }),
-            },
-            {
-              label: "Change Email",
-              name: "new_email",
-              type: "email",
-              placeholder: "Enter your new email",
-              value: accountInfo.new_email,
-              controlled: true,
-              onChange: (e) =>
-                setAccountInfo({ ...accountInfo, new_email: e.target.value }),
-            },
-            {
-              label: "New Password",
-              name: "new_password",
+              label: "Update Password",
+              name: "update_password",
               type: "password",
               placeholder: "Enter a new password",
               value: accountInfo.new_password,
@@ -153,20 +129,7 @@ const ProfilePage = () => {
               onChange: (e) =>
                 setAccountInfo({
                   ...accountInfo,
-                  new_password: e.target.value,
-                }),
-            },
-            {
-              label: "Confirm New Password",
-              name: "confirm_new_password",
-              type: "password",
-              placeholder: "Confirm new password",
-              value: accountInfo.confirm_new_password,
-              controlled: true,
-              onChange: (e) =>
-                setAccountInfo({
-                  ...accountInfo,
-                  confirm_new_password: e.target.value,
+                  update_password: e.target.value,
                 }),
             },
           ]}

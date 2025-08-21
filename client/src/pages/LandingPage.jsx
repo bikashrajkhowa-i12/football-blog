@@ -48,7 +48,6 @@ const LandingPage = () => {
                 title,
                 published_date,
                 tags = [],
-                blog_id,
                 slug,
                 author = "Bkaz",
                 preview = "No preview!",
@@ -63,11 +62,7 @@ const LandingPage = () => {
                   : bundesligaImage;
 
               return (
-                <Link
-                  to={`/blog/${slug}-${blog_id}`}
-                  key={index}
-                  className="h-full group"
-                >
+                <Link to={`/blog/${slug}`} key={index} className="h-full group">
                   <Card className="relative h-full flex flex-col">
                     <div className="flex flex-col justify-between gap-2 h-full">
                       {/* Meta Info */}

@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { CircleUserRound, Menu } from "lucide-react";
 
 import { useAuth } from "../context/auth/AuthContext";
-
 import Button from "./Button";
 import Drawer from "./Drawer";
-import { CircleUserRound, Menu } from "lucide-react";
 
 const Navbar = ({ setShowAuthPanel }) => {
   const navigate = useNavigate();
@@ -104,10 +103,6 @@ const Navbar = ({ setShowAuthPanel }) => {
             src={user.avatar_url}
             alt={user?.name || "User Avatar"}
             className="w-full h-full object-cover"
-            onError={(e) => {
-              e.currentTarget.onerror = null;
-              e.currentTarget.src = "/images/avatar-fallback.png";
-            }}
           />
         ) : (
           <CircleUserRound size={26} className="text-gray-600 m-auto" />
@@ -116,9 +111,9 @@ const Navbar = ({ setShowAuthPanel }) => {
 
       {/* Desktop Dropdown */}
       {dropdownOpen && (
-        <div className="absolute right-0 mt-2 w-36 bg-white border rounded shadow-md z-50">
+        <div className="absolute right-0 mt-2 w-36 bg-white text-black border-2 rounded border-gray-300 shadow-md z-50">
           <div
-            className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+            className="px-4 py-2 hover:bg-gray-500 border-b-[2px] border-gray-300 cursor-pointer"
             onClick={() => {
               navigate("/profile");
               setDropdownOpen(false);
@@ -127,7 +122,7 @@ const Navbar = ({ setShowAuthPanel }) => {
             Profile
           </div>
           <div
-            className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-red-600"
+            className="px-4 py-2 hover:bg-gray-500 cursor-pointer"
             onClick={handleLogout}
           >
             Logout
