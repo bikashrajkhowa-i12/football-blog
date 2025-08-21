@@ -11,15 +11,18 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import AuthPanel from "./components/auth/AuthPanel";
 import PublicLayout from "./components/PublicLayout";
+import { useAuth } from "./context/auth/AuthContext";
 
 const AppRedirect = () => {
-  const { startLoading, stopLoading } = useLoader();
-  const [showAuthPanel, setShowAuthPanel] = useState(false);
-  const switchShowAuthPanel = (value) => setShowAuthPanel(value);
-
-  const isAdmin = false; // TODO: Read from backend / redux
   const navigate = useNavigate();
   const location = useLocation();
+  const { user = {}, isAuthenticated = false } = useAuth();
+  const { startLoading, stopLoading } = useLoader();
+  const [showAuthPanel, setShowAuthPanel] = useState(false);
+
+  const isAdmin = isAuthenticated && user?.role === "admin";
+  const validatePath = location.pathname.startsWith("/admin");
+  const switchShowAuthPanel = (value) => setShowAuthPanel(value);
 
   // Redirect on isAdmin change
   useEffect(() => {
@@ -30,7 +33,7 @@ const AppRedirect = () => {
       });
       navigate("/admin/dashboard", { replace: true });
       stopLoading({ type: "global" });
-    } else if (!isAdmin && location.pathname.startsWith("/admin")) {
+    } else if (!isAdmin && validatePath) {
       startLoading({
         type: "global",
         prompt: "Switching to user workspace, please wait...",

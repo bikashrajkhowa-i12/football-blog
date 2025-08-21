@@ -1,10 +1,6 @@
 const authDto = require("../../dtos/auth.dto");
 const authService = require("../../services/auth/auth.service");
-const {
-  verifyRefreshToken,
-  generateToken,
-} = require("../../services/auth/jwt-service");
-const { setAuthCookies } = require("../../utils/cookie");
+const { setAuthCookies, clearAuthCookies } = require("../../utils/cookies");
 
 const login = async (req, res) => {
   try {
@@ -18,17 +14,20 @@ const login = async (req, res) => {
 
     res.status(201).json({ accessToken, user, message: "Login successful" });
   } catch (err) {
-    return res.status(500).json({ message: err.message });
+    console.log(err);
+    res
+      .status(500)
+      .json({ message: err.message || "Login failed!", stack: err });
   }
 };
 
 // Logout
 const logout = async (req, res) => {
   try {
-    // You can clear token on frontend or blacklist token on backend
-    return res.json({ message: "Logout successful" });
+    clearAuthCookies(res);
+    res.status(201).json({ message: "Logout successful" });
   } catch (err) {
-    return res.status(500).json({ error: err.message });
+    res.status(500).json({ message: err.message || "Logout failed!" });
   }
 };
 
@@ -44,7 +43,9 @@ const signup = async (req, res) => {
 
     res.status(201).json({ accessToken, user, message: "Signup successful" });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res
+      .status(500)
+      .json({ message: err.message || "Sign up failed! Please try again!" });
   }
 };
 
@@ -73,17 +74,21 @@ const googleAuth = async (req, res) => {
       .json({ accessToken, user, message: "Google-Authentication Successful" });
   } catch (err) {
     console.error(err);
-    res.status(401).json({ message: "Invalid Google token" });
+    res
+      .status(500)
+      .json({ message: err.message || "Google-Authentication Failed" });
   }
 };
 
 const refreshAccessToken = async (req, res) => {
   try {
     const token = req.refreshToken;
-    const newAccessToken = await authService.renewAuthTokens(token);
-    return res.json({ accessToken: newAccessToken });
+    const { newAccessToken, user } = await authService.renewAuthTokens(token);
+    res.status(201).json({ accessToken: newAccessToken, user });
   } catch (err) {
-    return res.status(401).json({ message: "Invalid refresh token" });
+    console.log(err);
+    clearAuthCookies(res);
+    res.status(401).json({ message: `Invalid refresh token! ${err.message}` });
   }
 };
 

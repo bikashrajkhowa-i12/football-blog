@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 
 const conenctMongo = require("./db/mongo");
 const sequelize = require("./db/pg");
@@ -8,9 +9,17 @@ const routes = require("./routes");
 
 const app = express();
 
-// Middleware
-app.use(cors());
+// Middlewares
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL,
+    credentials: true, // ✅ allows cookies to be sent
+  })
+);
+
 app.use(express.json());
+
+app.use(cookieParser());
 
 // API Routes
 app.use(routes);

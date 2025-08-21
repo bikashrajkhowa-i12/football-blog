@@ -4,7 +4,7 @@ import { OAuth2Client } from "google-auth-library";
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 // Generate short-lived access token (JWT)
-export const generateToken = (user) => {
+export const generateAccessToken = (user) => {
   return jwt.sign(
     {
       id: user.id,
@@ -17,8 +17,12 @@ export const generateToken = (user) => {
 };
 
 // Verify access token (JWT)
-export const verifyToken = (token) => {
-  return jwt.verify(token, process.env.JWT_SECRET);
+export const verifyAccessToken = (token) => {
+  try {
+    return jwt.verify(token, process.env.JWT_SECRET);
+  } catch (error) {
+    throw error;
+  }
 };
 
 //Generate long-lived refresh token
@@ -30,7 +34,11 @@ export const generateRefreshToken = (user) => {
 
 // Verify refresh token
 export const verifyRefreshToken = (token) => {
-  return jwt.verify(token, process.env.JWT_REFRESH_SECRET);
+  try {
+    return jwt.verify(token, process.env.JWT_REFRESH_SECRET);
+  } catch (error) {
+    throw error;
+  }
 };
 
 // Verify Google ID token and return user payload
@@ -48,7 +56,7 @@ export const verifyGoogleToken = async (idToken) => {
 
 export const generateAuthTokens = (user) => {
   return {
-    accessToken: generateToken(user),
+    accessToken: generateAccessToken(user),
     refreshToken: generateRefreshToken(user),
   };
 };

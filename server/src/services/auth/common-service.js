@@ -10,7 +10,7 @@ const findUserByEmail = async (email) => {
 
 const findUserById = async (id) => {
   try {
-    return await User.findOne({ where: { id }, status: active });
+    return await User.findOne({ where: { id }, status: "active" });
   } catch (error) {
     throw error;
   }

@@ -1,38 +1,52 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
+import { useAuth } from "../context/auth/AuthContext";
+
 import Button from "./Button";
 import Drawer from "./Drawer";
-import { Menu } from "lucide-react";
+import { CircleUserRound, Menu } from "lucide-react";
 
-const Navbar = ({ setShowAuthPanel, isLoggedIn = false }) => {
+const Navbar = ({ setShowAuthPanel }) => {
   const navigate = useNavigate();
+  const { isAuthenticated, user, logout } = useAuth();
   const [showDrawer, setShowDrawer] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const toggleDrawer = () => setShowDrawer((prev) => !prev);
   const closeDrawer = () => setShowDrawer(false);
 
+  const handleNavigation = (path) => {
+    navigate(path);
+    closeDrawer();
+  };
+
+  const handleLogout = () => {
+    if (logout) logout();
+    navigate("/home");
+    closeDrawer();
+    setDropdownOpen(false);
+  };
+
   const appLogo = (
-    <Link to="/home">
+    <Link to="/home" onClick={closeDrawer}>
       <img
         src="/logos/navlogo1.png"
-        alt="logo"
+        alt="App Logo"
         className="h-10 w-auto cursor-pointer"
-        onClick={closeDrawer}
       />
     </Link>
   );
 
   const navLinks = (className = "") => {
     const linkClass = "hover:text-green-700 active:text-green-800 text-sm";
+
     return (
       <div className={className}>
-        {/**if logged in and mobile-view, display the "Profile" at top of drawer-links */}
-        {isLoggedIn && (
+        {isAuthenticated && (
           <div
-            className="md:hidden"
-            onClick={() => {
-              navigate("/profile");
-              closeDrawer();
-            }}
+            className="md:hidden cursor-pointer mb-2 font-medium"
+            onClick={() => handleNavigation("/profile")}
           >
             Profile
           </div>
@@ -51,38 +65,88 @@ const Navbar = ({ setShowAuthPanel, isLoggedIn = false }) => {
           Teams
         </Link>
 
-        {/**if not logged in and mobile-view, display the "Log-in" at end of drawer-links */}
-        {!isLoggedIn && (
+        {!isAuthenticated && (
           <Button
             variant="success"
-            className="md:hidden py-1"
+            className="md:hidden py-1 mt-2"
             onClick={() => {
               closeDrawer();
               setShowAuthPanel(true);
             }}
           >
-            Log in
+            Log In
+          </Button>
+        )}
+
+        {/* Mobile Logout */}
+        {isAuthenticated && (
+          <Button
+            variant="danger"
+            className="md:hidden mt-4"
+            onClick={handleLogout}
+          >
+            Logout
           </Button>
         )}
       </div>
     );
   };
 
+  const profileAvatar = (
+    <div className="relative">
+      <div
+        className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-gray-300 shadow-md cursor-pointer"
+        onClick={() => setDropdownOpen((prev) => !prev)}
+        title={user?.name || "Profile"}
+      >
+        {user?.avatar_url ? (
+          <img
+            src={user.avatar_url}
+            alt={user?.name || "User Avatar"}
+            className="w-full h-full object-cover"
+            onError={(e) => {
+              e.currentTarget.onerror = null;
+              e.currentTarget.src = "/images/avatar-fallback.png";
+            }}
+          />
+        ) : (
+          <CircleUserRound size={26} className="text-gray-600 m-auto" />
+        )}
+      </div>
+
+      {/* Desktop Dropdown */}
+      {dropdownOpen && (
+        <div className="absolute right-0 mt-2 w-36 bg-white border rounded shadow-md z-50">
+          <div
+            className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+            onClick={() => {
+              navigate("/profile");
+              setDropdownOpen(false);
+            }}
+          >
+            Profile
+          </div>
+          <div
+            className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-red-600"
+            onClick={handleLogout}
+          >
+            Logout
+          </div>
+        </div>
+      )}
+    </div>
+  );
+
   return (
-    <header className="fixed top-0 left-0 w-screen z-50 bg-white border-b border-gray-300">
+    <header className="fixed top-0 left-0 w-full z-50 bg-white border-b border-gray-300">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         <nav className="flex items-center justify-between py-3">
           {/* Mobile Menu Button */}
-          <div className="w-10 md:hidden">
-            {/* <button
-              className="mb-[6px] opacity-60 mr-4 text-2xl rounded-md"
-              onClick={() => setShowDrawer((v) => !v)}
-            >
-              <Menu size={24} />
-            </button> */}
+          <div className="md:hidden">
             <button
-              onClick={() => setShowDrawer((v) => !v)}
+              onClick={toggleDrawer}
               className="p-1 rounded bg-gray-400 text-white hover:bg-gray-500"
+              aria-label="Open menu"
             >
               <Menu size={24} />
             </button>
@@ -95,21 +159,16 @@ const Navbar = ({ setShowAuthPanel, isLoggedIn = false }) => {
           <div className="hidden md:flex gap-6">{navLinks("flex gap-4")}</div>
 
           {/* Login/Profile */}
-          <div className="w-20 flex justify-center items-center">
+          <div className="flex items-center justify-center w-20">
             <div className="hidden md:block">
-              {!isLoggedIn ? (
+              {!isAuthenticated ? (
                 <Button
                   variant="success"
                   text="Log In"
                   onClick={() => setShowAuthPanel(true)}
                 />
               ) : (
-                <span
-                  className="text-xl border-2 border-black opacity-80 rounded-full cursor-pointer hover:opacity-100 transition duration-300"
-                  onClick={() => navigate("/profile")}
-                >
-                  👤
-                </span>
+                profileAvatar
               )}
             </div>
           </div>
@@ -120,16 +179,17 @@ const Navbar = ({ setShowAuthPanel, isLoggedIn = false }) => {
           isOpen={showDrawer}
           onClose={closeDrawer}
           position="left"
-          viewScreen="md:hidden" //visible only on small-screens
+          viewScreen="md:hidden"
         >
-          <div className="flex justify-between p-4 border-b border-gray-300">
+          <div className="flex justify-between items-center p-4 border-b border-gray-300">
             {appLogo}
-            <span
-              className="flex items-center text-2xl mb-2 opacity-70 cursor-pointer"
+            <button
+              className="text-2xl opacity-70 hover:opacity-100"
               onClick={closeDrawer}
+              aria-label="Close menu"
             >
               ✖
-            </span>
+            </button>
           </div>
           {navLinks("flex flex-col gap-4 p-4")}
         </Drawer>

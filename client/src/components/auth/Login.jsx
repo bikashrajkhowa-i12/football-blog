@@ -1,18 +1,26 @@
 import FormBuilder from "../FormBuilder";
 import Divider from "../Divider";
-import GoogleButton from "./GoogleButton";
+import Google from "./Google";
 import { isEmpty } from "lodash";
 import callApi from "../../api/callApi";
 import { useState } from "react";
 import Alert from "../Alert";
 import { useLoader } from "../../context/LoaderContext";
 import { useToast } from "../../context/ToastContext";
+import { useAuth } from "../../context/auth/AuthContext";
 
 const Login = (props) => {
+  const { login } = useAuth();
   const { onSwitchView, onClose = () => "" } = props || {};
   const [error, setError] = useState(null);
   const { startLoading, stopLoading } = useLoader();
   const { addToast } = useToast();
+
+  const toast = () =>
+    addToast({
+      type: "success",
+      message: `🎉 Welcome aboard! 👋😃`,
+    });
 
   const [formData, setFormData] = useState({
     email: "",
@@ -32,9 +40,8 @@ const Login = (props) => {
         data: data,
       });
 
-      //TODO: set response object redux for usage
-      console.log("user: ", response);
-      addToast({ type: "success", message: "Welcome Back!" });
+      login(response?.data?.user, response?.data?.accessToken);
+      toast();
       onClose(); //close the modal
     } catch (error) {
       setError(error.message || "Invalid credentials! Try again...");
@@ -91,7 +98,7 @@ const Login = (props) => {
     },
   ];
 
-  const signUp = () => {
+  const signUpLink = () => {
     return (
       <div className="w-full flex justify-center items-center mt-2">
         <p className="text-base text-gray-600">No account yet?</p>
@@ -124,8 +131,8 @@ const Login = (props) => {
       <FormBuilder fields={fields} buttons={buttons} onSubmit={onClickLogin} />
       {forgotPassword()}
       <Divider text="Or" />
-      <GoogleButton setError={setError} onClose={onClose} />
-      {signUp()}
+      <Google setError={setError} onClose={onClose} toast={toast} />
+      {signUpLink()}
     </div>
   );
 };

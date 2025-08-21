@@ -7,14 +7,22 @@ import { useToast } from "../../context/ToastContext";
 
 import Divider from "../Divider";
 import FormBuilder from "../FormBuilder";
-import GoogleButton from "./GoogleButton";
+import Google from "./Google";
 import Alert from "../Alert";
+import { useAuth } from "../../context/auth/AuthContext";
 
 const Signup = (props) => {
+  const { login } = useAuth();
   const { onSwitchView, onClose = () => "" } = props || {};
   const [error, setError] = useState(null);
   const { startLoading, stopLoading } = useLoader();
   const { addToast } = useToast();
+
+  const toast = () =>
+    addToast({
+      type: "success",
+      message: `🎉 Signup successful! Welcome aboard!`,
+    });
 
   const [formData, setFormData] = useState({
     email: "",
@@ -34,11 +42,8 @@ const Signup = (props) => {
         data: data,
       });
 
-      console.log("response: ", response);
-      addToast({
-        type: "success",
-        message: `🎉 Signup successful! Welcome aboard!`,
-      });
+      login(response?.data?.user, response?.data?.accessToken);
+      toast();
       onClose();
     } catch (error) {
       setError(error.message || "Failed to sign-up");
@@ -95,7 +100,7 @@ const Signup = (props) => {
     },
   ];
 
-  const login = () => {
+  const loginLink = () => {
     return (
       <div className="w-full flex justify-center items-center mt-2">
         <p className="text-base text-gray-600">Already have an account?</p>
@@ -119,8 +124,8 @@ const Signup = (props) => {
         formClassName="flex flex-col gap-4"
       />
       <Divider text="Or" />
-      <GoogleButton setError={setError} onClose={onClose} />
-      {login()}
+      <Google setError={setError} onClose={onClose} toast={toast} />
+      {loginLink()}
     </div>
   );
 };

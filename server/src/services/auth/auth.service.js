@@ -2,9 +2,13 @@ const {
   generateAuthTokens,
   verifyGoogleToken,
   verifyRefreshToken,
-  generateToken,
+  generateAccessToken,
 } = require("./jwt-service");
-const { findUserByEmail, createUser } = require("./common-service");
+const {
+  findUserByEmail,
+  createUser,
+  findUserById,
+} = require("./common-service");
 const { verifyPassword, hashPassword } = require("./password.service");
 const authDto = require("../../dtos/auth.dto");
 const { extractFields } = require("./helper");
@@ -15,6 +19,11 @@ const login = async ({ email, password }) => {
     if (!user) {
       throw new Error(`Invalid email or password.`);
     }
+
+    if (user.provider && user.provider_id && !user.password)
+      throw new Error(
+        `This email is linked to ${user.provider} sign-in. Please continue with ${user.provider} or set a password.`
+      );
 
     const isMatch = await verifyPassword(password, user.password);
     if (!isMatch) {
@@ -68,11 +77,14 @@ const authenticateWithGoogle = async (credential) => {
 const renewAuthTokens = async (token) => {
   try {
     const decoded = verifyRefreshToken(token);
-    const user = await findUserByEmail(decoded.id);
+    const user = await findUserById(decoded.id);
     if (!user)
       throw new Error("User doesn't exist for with the refresh token!");
 
-    return generateToken(user);
+    return {
+      user: extractFields(user),
+      newAccessToken: generateAccessToken(user),
+    };
   } catch (error) {
     throw error;
   }

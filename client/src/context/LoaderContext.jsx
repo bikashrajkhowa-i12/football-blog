@@ -13,7 +13,7 @@ export const LoaderProvider = ({ children }) => {
     setLoaderState({ type, loading: true, prompt });
   };
 
-  const stopLoading = ({ type = "global" }) => {
+  const stopLoading = ({ type = "global", prompt = "Loading..." }) => {
     setLoaderState({ type, loading: false, prompt });
   };
 

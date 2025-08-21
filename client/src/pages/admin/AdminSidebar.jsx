@@ -1,16 +1,12 @@
-import { LogOut } from "lucide-react";
 import React from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { LogOut } from "lucide-react";
+
+import { useAuth } from "../../context/auth/AuthContext";
+import LiveDateTime from "../../components/LiveDateTime";
 
 const AdminSidebar = ({ closeDrawer = false }) => {
-  const navigate = useNavigate();
-
-  // TODO: Replace with redux user
-  const user = {
-    email: "dummyadmin@123.com",
-    role: "admin",
-    isLoggedIn: true,
-  };
+  const { user, logout } = useAuth();
 
   const links = [
     { to: "/admin/dashboard", label: "Dashboard" },
@@ -21,19 +17,18 @@ const AdminSidebar = ({ closeDrawer = false }) => {
   ];
 
   const handleLogout = () => {
-    // TODO: Hook into redux / auth context to clear session
-    console.log("Logging out...");
-    navigate("/login");
+    if (logout) logout();
   };
 
   return (
     <aside className="flex flex-col h-full p-4 bg-white rounded-md shadow-lg">
       {/* Header */}
-      <div className="p-4 rounded-md shadow-md mb-4">
+      <div className="p-4 rounded-md shadow-md mb-4 space-y-6">
         <h1 className="text-2xl font-extrabold text-gray-800">Manage App</h1>
-        <div className="mt-2 text-sm text-gray-600">
-          <p>Email: {user.email}</p>
-          <p>Role: {user.role}</p>
+        <div className="mt-2 text-sm text-gray-600 space-y-1">
+          <p>Email: {user?.email || null}</p>
+          <p>Role: {user?.role || null}</p>
+          <p>{<LiveDateTime />}</p>
         </div>
       </div>
 

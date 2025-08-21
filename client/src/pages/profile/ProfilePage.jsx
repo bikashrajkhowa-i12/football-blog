@@ -1,20 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
+import { CircleUserRound } from "lucide-react";
+
+import { useAuth } from "../../context/auth/AuthContext";
+
 import Button from "../../components/Button";
 import FormBuilder from "../../components/FormBuilder";
-import defaultAvatar from "./user-profile-logo.png";
 
 const ProfilePage = () => {
+  const {
+    avatar_url = "",
+    name = "",
+    username = "",
+    email = "",
+  } = useAuth().user;
+
+  const [personalInfo, setPersonalInfo] = useState({
+    name: name || "",
+    username: username || "",
+    bio: "",
+  });
+
+  const [accountInfo, setAccountInfo] = useState({
+    email: email || "",
+    password: "************",
+    new_email: "",
+    new_password: "",
+    confirm_new_password: "",
+  });
+
   return (
     <div className="max-w-5xl mx-auto w-full flex flex-col gap-12 py-12 px-6">
       {/* Profile Header */}
       <div className="flex flex-col items-center gap-5 p-4 rounded-2xl shadow-lg bg-gradient-to-b from-gray-50 to-white">
         {/* Avatar */}
         <div className="relative w-[130px] h-[130px] rounded-full overflow-hidden border-4 border-gray-300 shadow-md">
-          <img
-            src={defaultAvatar}
-            className="w-full h-full object-cover"
-            alt="Profile Avatar"
-          />
+          {avatar_url ? (
+            <img
+              src={avatar_url}
+              className="w-full h-full object-cover"
+              alt="Profile Avatar"
+            />
+          ) : (
+            <CircleUserRound size={26} />
+          )}
         </div>
         <div className="text-sm text-gray-500 cursor-not-allowed opacity-70">
           Edit Profile Picture ✏️
@@ -35,18 +63,30 @@ const ProfilePage = () => {
               name: "name",
               type: "text",
               placeholder: "Enter your full name",
+              value: personalInfo.name,
+              controlled: true,
+              onChange: (e) =>
+                setPersonalInfo({ ...personalInfo, name: e.target.value }),
             },
             {
-              label: "Nickname",
-              name: "nickname",
+              label: "Username",
+              name: "username",
               type: "text",
-              placeholder: "Enter your nickname",
+              placeholder: "Enter your username",
+              value: personalInfo.username,
+              controlled: true,
+              onChange: (e) =>
+                setPersonalInfo({ ...personalInfo, username: e.target.value }),
             },
             {
               label: "Bio",
               name: "bio",
               type: "textarea",
               placeholder: "Write a short introduction...",
+              value: personalInfo.bio,
+              controlled: true,
+              onChange: (e) =>
+                setPersonalInfo({ ...personalInfo, bio: e.target.value }),
             },
           ]}
           buttons={[
@@ -75,29 +115,59 @@ const ProfilePage = () => {
           fields={[
             {
               label: "Current Email",
-              name: "current_email",
+              name: "email",
               type: "email",
-              defaultValue: "dummy@123.gmail.com", // TODO: fetch from API
               disabled: true,
+              value: accountInfo.email,
+              controlled: true,
+              onChange: (e) =>
+                setAccountInfo({ ...accountInfo, email: e.target.value }),
             },
             {
               label: "Current Password",
-              name: "current_password",
+              name: "password",
               type: "password",
-              defaultValue: "********",
               disabled: true,
+              value: accountInfo.password,
+              controlled: true,
+              onChange: (e) =>
+                setAccountInfo({ ...accountInfo, password: e.target.value }),
             },
             {
               label: "Change Email",
               name: "new_email",
               type: "email",
               placeholder: "Enter your new email",
+              value: accountInfo.new_email,
+              controlled: true,
+              onChange: (e) =>
+                setAccountInfo({ ...accountInfo, new_email: e.target.value }),
             },
             {
               label: "New Password",
               name: "new_password",
               type: "password",
               placeholder: "Enter a new password",
+              value: accountInfo.new_password,
+              controlled: true,
+              onChange: (e) =>
+                setAccountInfo({
+                  ...accountInfo,
+                  new_password: e.target.value,
+                }),
+            },
+            {
+              label: "Confirm New Password",
+              name: "confirm_new_password",
+              type: "password",
+              placeholder: "Confirm new password",
+              value: accountInfo.confirm_new_password,
+              controlled: true,
+              onChange: (e) =>
+                setAccountInfo({
+                  ...accountInfo,
+                  confirm_new_password: e.target.value,
+                }),
             },
           ]}
           buttons={[

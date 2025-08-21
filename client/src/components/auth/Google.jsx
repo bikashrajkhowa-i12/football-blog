@@ -2,9 +2,11 @@ import { useEffect } from "react";
 
 import callApi from "../../api/callApi";
 import { useLoader } from "../../context/LoaderContext";
+import { useAuth } from "../../context/auth/AuthContext";
 
-const GoogleButton = ({ setError, onClose }) => {
+const Google = ({ setError, onClose, toast = () => "" }) => {
   const { startLoading, stopLoading } = useLoader();
+  const { login } = useAuth();
 
   useEffect(() => {
     /* global google */ // only needed if you load the script via index.html
@@ -29,13 +31,16 @@ const GoogleButton = ({ setError, onClose }) => {
 
   const handleCredentialResponse = async (response) => {
     setError(null);
-    startLoading({ type: "global", prompt: "Verifying your account…" });
+    startLoading({ type: "global", prompt: "Signing you in...Please wait" });
     try {
-      const data = await callApi({
+      const res = await callApi({
         url: "/auth/google",
         method: "POST",
         data: { credential: response.credential },
       });
+
+      login(res?.data?.user, res?.data?.accessToken);
+      toast();
       onClose();
     } catch (error) {
       setError(error);
@@ -47,4 +52,4 @@ const GoogleButton = ({ setError, onClose }) => {
   return <div id="googleBtn" onClick={() => setError(null)}></div>;
 };
 
-export default GoogleButton;
+export default Google;
