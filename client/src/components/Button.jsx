@@ -13,7 +13,7 @@ const Button = (props) => {
   } = props || {};
 
   const variantMap = {
-    primary: "bg-blue-600 text-white hover:bg-blue-700",
+    primary: "bg-blue-700 text-white hover:bg-blue-800",
     secondary: "bg-gray-800 text-white hover:bg-gray-900",
     success: "bg-green-800 text-white hover:bg-green-900",
     info: "bg-sky-400 text-white hover:bg-sky-500",
@@ -28,7 +28,7 @@ const Button = (props) => {
   const selectedVariant = `${variantMap[variant || "primary"]}`;
   const styles = override
     ? `${className}`
-    : `${selectedVariant} text-sm opacity-90 hover:opacity-100 px-4 py-2 rounded-lg text-white 
+    : `${selectedVariant} text-sm opacity-90 hover:opacity-100 px-4 py-2 rounded-lg 
                   font-semibold shadow transition duration-300 ${className}`;
 
   if (name && name === "google") {

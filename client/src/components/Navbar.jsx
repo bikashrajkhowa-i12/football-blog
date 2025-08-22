@@ -1,24 +1,28 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { CircleUserRound, Menu } from "lucide-react";
+import { useNavigate, Link, useLocation } from "react-router-dom";
+import {
+  ChevronLeft,
+  CircleUserRound,
+  LogIn,
+  LogOut,
+  Menu,
+  User,
+} from "lucide-react";
 
 import { useAuth } from "../context/auth/AuthContext";
 import Button from "./Button";
 import Drawer from "./Drawer";
+import AppLogo from "./AppLogo";
 
 const Navbar = ({ setShowAuthPanel }) => {
   const navigate = useNavigate();
+  const pathname = useLocation().pathname;
   const { isAuthenticated, user, logout } = useAuth();
   const [showDrawer, setShowDrawer] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleDrawer = () => setShowDrawer((prev) => !prev);
   const closeDrawer = () => setShowDrawer(false);
-
-  const handleNavigation = (path) => {
-    navigate(path);
-    closeDrawer();
-  };
 
   const handleLogout = () => {
     if (logout) logout();
@@ -29,42 +33,53 @@ const Navbar = ({ setShowAuthPanel }) => {
 
   const appLogo = (
     <Link to="/home" onClick={closeDrawer}>
-      <img
-        src="/logos/navlogo1.png"
-        alt="App Logo"
-        className="h-10 w-auto cursor-pointer"
-      />
+      <AppLogo />
     </Link>
   );
 
   const navLinks = (className = "") => {
-    const linkClass = "hover:text-green-700 active:text-green-800 text-sm";
+    const links = [
+      { path: "/home", label: "Home" },
+      { path: "/latest", label: "Latest" },
+      { path: "/trending", label: "Trending" },
+      { path: "/fixtures", label: "Fixtures" },
+      // { path: "/teams", label: "Teams" },
+    ];
 
     return (
       <div className={className}>
         {isAuthenticated && (
-          <div
-            className="md:hidden cursor-pointer mb-2 font-medium"
-            onClick={() => handleNavigation("/profile")}
+          <Link
+            to={"/profile"}
+            className={`md:hidden cursor-pointer font-semibold ${
+              pathname === "/profile" ? "text-green-700" : "text-gray-800"
+            }`}
+            onClick={() => closeDrawer()}
           >
             Profile
-          </div>
+          </Link>
         )}
 
-        <Link to="/home" className={linkClass} onClick={closeDrawer}>
-          Home
-        </Link>
-        <Link to="/latest" className={linkClass} onClick={closeDrawer}>
-          Latest
-        </Link>
-        <Link to="/fixtures" className={linkClass} onClick={closeDrawer}>
-          Fixtures
-        </Link>
-        <Link to="/teams" className={linkClass} onClick={closeDrawer}>
-          Teams
-        </Link>
+        {links.map((link) => {
+          const isActive = pathname === link.path;
+          const linkClass = `hover:text-green-700 ${
+            isActive ? "text-green-700" : "text-gray-800"
+          } text-md font-semibold`;
 
-        {!isAuthenticated && (
+          return (
+            <Link
+              key={link.path}
+              to={link.path}
+              className={linkClass}
+              onClick={closeDrawer}
+            >
+              {link.label}
+            </Link>
+          );
+        })}
+
+        {/* Mobile Login/Logout buttons */}
+        {!isAuthenticated ? (
           <Button
             variant="success"
             className="md:hidden py-1 mt-2"
@@ -73,18 +88,19 @@ const Navbar = ({ setShowAuthPanel }) => {
               setShowAuthPanel(true);
             }}
           >
-            Log In
+            <div className="flex justify-center gap-2 items-center">
+              Login <LogIn size={15} className="mt-0.5" />
+            </div>
           </Button>
-        )}
-
-        {/* Mobile Logout */}
-        {isAuthenticated && (
+        ) : (
           <Button
-            variant="danger"
+            variant="dark"
             className="md:hidden mt-4"
             onClick={handleLogout}
           >
-            Logout
+            <div className="flex justify-center gap-2 items-center">
+              Logout <LogOut size={15} className="mt-0.5" />
+            </div>
           </Button>
         )}
       </div>
@@ -94,7 +110,7 @@ const Navbar = ({ setShowAuthPanel }) => {
   const profileAvatar = (
     <div className="relative">
       <div
-        className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-gray-300 shadow-md cursor-pointer"
+        className="relative w-9 h-9 rounded-full overflow-hidden border-2 border-gray-300 shadow-md cursor-pointer"
         onClick={() => setDropdownOpen((prev) => !prev)}
         title={user?.name || "Profile"}
       >
@@ -113,19 +129,23 @@ const Navbar = ({ setShowAuthPanel }) => {
       {dropdownOpen && (
         <div className="absolute right-0 mt-2 w-36 bg-white text-black border-2 rounded border-gray-300 shadow-md z-50">
           <div
-            className="px-4 py-2 hover:bg-gray-500 border-b-[2px] border-gray-300 cursor-pointer"
+            className="px-4 py-2 hover:bg-gray-300 cursor-pointer"
             onClick={() => {
               navigate("/profile");
               setDropdownOpen(false);
             }}
           >
-            Profile
+            <div className="flex justify-center gap-2 items-center">
+              Profile <User size={15} className="mt-0.5" />
+            </div>
           </div>
           <div
-            className="px-4 py-2 hover:bg-gray-500 cursor-pointer"
+            className="px-4 py-2 hover:bg-gray-300 cursor-pointer"
             onClick={handleLogout}
           >
-            Logout
+            <div className="flex justify-center gap-2 items-center">
+              Logout <LogOut size={15} className="mt-0.5" />
+            </div>
           </div>
         </div>
       )}
@@ -134,13 +154,13 @@ const Navbar = ({ setShowAuthPanel }) => {
 
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-white border-b border-gray-300">
-      <div className="max-w-7xl mx-auto px-4 md:px-8">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 bg-transparent">
         <nav className="flex items-center justify-between py-3">
           {/* Mobile Menu Button */}
           <div className="md:hidden">
             <button
               onClick={toggleDrawer}
-              className="p-1 rounded bg-gray-400 text-white hover:bg-gray-500"
+              className="p-1 rounded text-black"
               aria-label="Open menu"
             >
               <Menu size={24} />
@@ -183,7 +203,7 @@ const Navbar = ({ setShowAuthPanel }) => {
               onClick={closeDrawer}
               aria-label="Close menu"
             >
-              ✖
+              <ChevronLeft />
             </button>
           </div>
           {navLinks("flex flex-col gap-4 p-4")}

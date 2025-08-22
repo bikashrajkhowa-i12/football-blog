@@ -1,22 +1,30 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { startCase } from "lodash";
 
 import { blogs } from "../demo/data";
 import Divider from "../components/Divider";
 
-// TODO: Remove this temporary image holders.
 import manchesterImage from "../demo/images/manchester.jpg";
 import bundesligaImage from "../demo/images/bundesliga.jpg";
+import { ArrowLeft } from "lucide-react";
+import Button from "../components/Button";
 
 const BlogPost = () => {
   const { slug } = useParams();
+  const location = useLocation();
+  const navigate = useNavigate();
   const [blog, setBlog] = useState(null);
+  const commentsRef = useRef(null);
 
   useEffect(() => {
     const matchedBlog = blogs.find((b) => b.slug === slug);
     setBlog(matchedBlog || null);
-  }, [slug]);
+
+    if (location.hash === "#comments" && commentsRef.current) {
+      commentsRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [blog, slug, location]);
 
   const displaySources = (sources = []) => {
     if (sources.length === 0) return null;
@@ -63,6 +71,14 @@ const BlogPost = () => {
 
     return (
       <article className="w-full flex flex-col gap-10">
+        {/* Breadcrumb + Back */}
+        <div
+          className="flex items-center gap-2 text-sm text-gray-500 mb-4 cursor-pointer"
+          onClick={() => navigate(-1)}
+        >
+          <ArrowLeft />
+        </div>
+
         {/* Title + Meta */}
         <div className="border-l-8 border-red-600 pl-4 mb-4">
           <h1 className="text-3xl font-extrabold mb-1">{title}</h1>
@@ -115,10 +131,10 @@ const BlogPost = () => {
 
         {displaySources(sources)}
 
-        <Divider />
+        <Divider className="mt-20" />
 
         {/* Comments */}
-        <div>
+        <div ref={commentsRef} className="space-y-4 mt-20">
           <h3 className="text-lg font-semibold mb-4">
             Comments ({comments.length})
           </h3>
@@ -134,6 +150,16 @@ const BlogPost = () => {
               ))}
             </ul>
           )}
+          <div className="flex flex-col gap-4 max-w-md">
+            <textarea
+              name="post_a_comment"
+              placeholder="Comment here..."
+              className="border-[1.5px] border-gray-400 px-6 py-2 rounded-md"
+            />
+            <span className="flex justify-end">
+              <Button variant="dark">Comment</Button>
+            </span>
+          </div>
         </div>
 
         <Divider />
@@ -155,8 +181,10 @@ const BlogPost = () => {
   };
 
   return (
-    <div className="py-10 px-2 sm:px-4 flex flex-col gap-12">
-      <div className="max-w-4xl mx-auto w-full">{displayContent()}</div>
+    <div className="max-w-6xl mx-auto">
+      <div className="py-10 px-2 sm:px-4 flex flex-col gap-12">
+        <div className="max-w-4xl mx-auto w-full">{displayContent()}</div>
+      </div>
     </div>
   );
 };

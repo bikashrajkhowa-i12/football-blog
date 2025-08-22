@@ -1,20 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { startCase } from "lodash";
 
 import { blogs } from "../demo/data";
 import Badge from "../components/Badge";
 import Card from "../components/Card";
 import Button from "../components/Button";
-import Divider from "../components/Divider";
+import ToTop from "../components/ToTop";
 
-// Temporary demo images (replace with blog thumbnails if available)
 import manchesterImage from "../demo/images/manchester.jpg";
 import bundesligaImage from "../demo/images/bundesliga.jpg";
-import { demoAlert } from "../demo/alerts";
 
 const LandingPage = () => {
-  const featuredBlogs = blogs.slice(0, 6);
+  const [visibleCount, setVisibleCount] = useState(6); // Initially show 6 blogs
+
+  const handleLoadMore = () => {
+    setVisibleCount((prev) => prev + 3);
+  };
+
+  const featuredBlogs = blogs.slice(0, visibleCount);
 
   return (
     <div className="flex flex-col gap-16 py-10 px-2 sm:px-4">
@@ -27,13 +30,11 @@ const LandingPage = () => {
           Match reports, transfer rumors, tactical breakdowns. Everything you
           need in one place.
         </p>
-        <Button
-          variant="success"
-          className="mt-4 px-6 py-2 rounded-full"
-          onClick={() => alert(demoAlert())}
-        >
-          Explore Latest Posts
-        </Button>
+        <Link to={"/latest"}>
+          <Button variant="success" className="mt-4 px-6 py-2 rounded-full">
+            Explore Latest Posts
+          </Button>
+        </Link>
       </section>
 
       {/* Featured Blogs */}
@@ -50,11 +51,9 @@ const LandingPage = () => {
                 tags = [],
                 slug,
                 author = "Bkaz",
-                preview = "No preview!",
                 reading_time = "3 min read",
               } = blog;
 
-              // Temporary image logic
               const imageSrc =
                 tags.includes("Manchester United") ||
                 tags.includes("Manchester")
@@ -81,40 +80,21 @@ const LandingPage = () => {
                       </div>
 
                       {/* Blog Thumbnail */}
-                      {imageSrc && (
-                        <img
-                          src={imageSrc}
-                          alt={title}
-                          className="rounded-md max-h-52 object-cover w-full group-hover:scale-105 transition duration-200"
-                        />
-                      )}
-
-                      {/* Blog Title */}
-                      <div className="border-l-4 border-red-700 pl-3 mt-2">
-                        <h3 className="text-md font-bold text-gray-800 group-hover:text-red-700 underline line-clamp-2">
-                          {title}
-                        </h3>
+                      <div className="overflow-hidden rounded-t-md">
+                        {imageSrc && (
+                          <img
+                            src={imageSrc}
+                            alt={title}
+                            className="w-full h-full rounded-md object-cover transform transition-transform duration-300 group-hover:scale-105"
+                          />
+                        )}
                       </div>
 
-                      {/* Tags */}
-                      {tags.length > 0 && (
-                        <p className="text-xs text-gray-400 italic">
-                          {tags
-                            .slice(0, 3)
-                            .map((tag) => startCase(tag))
-                            .join(" | ")}
-                        </p>
-                      )}
-
-                      {/* Preview */}
-                      <div className="relative max-h-24 overflow-hidden">
-                        <p className="text-sm text-gray-500 line-clamp-3 group-hover:text-black font-medium">
-                          {preview}
-                        </p>
-                        <div className="absolute bottom-4 left-0 w-full h-8 bg-gradient-to-t from-white to-transparent pointer-events-none" />
-                        <p className="text-sm mt-1 text-gray-800 underline group-hover:font-semibold">
-                          Read more...
-                        </p>
+                      {/* Blog Title */}
+                      <div className="mt-2">
+                        <h3 className="text-md font-bold text-gray-800 group-hover:text-red-700 group-hover:underline line-clamp-2">
+                          {title}
+                        </h3>
                       </div>
                     </div>
                   </Card>
@@ -122,19 +102,20 @@ const LandingPage = () => {
               );
             })}
           </div>
+
+          {/* Load More Button */}
+          {visibleCount < blogs.length && (
+            <div className="flex justify-center mt-10">
+              <button
+                onClick={handleLoadMore}
+                className="px-4 py-2 bg-black bg-opacity-20 rounded-full text-white hover:bg-opacity-40 transition duration-300 ease-out"
+              >
+                Load More
+              </button>
+            </div>
+          )}
         </section>
       )}
-
-      {/* Scroll to Top */}
-      <Divider>
-        <Button
-          text="↑ Top"
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          override
-          className="w-20 h-12 font-bold text-gray-400 hover:-translate-y-1 transition duration-[800ms] 
-                    bg-gradient-to-t from-sky-200 to-gray-300 rounded-full"
-        />
-      </Divider>
 
       {/* Categories */}
       <section className="max-w-4xl mx-auto w-full">
@@ -159,28 +140,7 @@ const LandingPage = () => {
           ))}
         </div>
       </section>
-
-      {/* Newsletter */}
-      <section className="text-center max-w-md mx-auto mt-10">
-        <h4 className="text-md font-bold text-gray-700 mb-3">
-          Get Weekly Football Updates
-        </h4>
-        <form
-          className="flex flex-col sm:flex-row items-center justify-center gap-3"
-          onSubmit={(e) => {
-            e.preventDefault();
-            alert(demoAlert());
-          }}
-        >
-          <input
-            type="email"
-            placeholder="Your email address"
-            className="px-4 py-2 border border-gray-400 rounded-md focus:outline-none focus:ring-1 focus:ring-green-700 w-full sm:w-auto"
-            required
-          />
-          <Button text="Subscribe" type="submit" variant="success" />
-        </form>
-      </section>
+      <ToTop />
     </div>
   );
 };

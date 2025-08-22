@@ -24,7 +24,6 @@ const AppRedirect = () => {
   const validatePath = location.pathname.startsWith("/admin");
   const switchShowAuthPanel = (value) => setShowAuthPanel(value);
 
-  // Redirect on isAdmin change
   useEffect(() => {
     if (isAdmin) {
       startLoading({
