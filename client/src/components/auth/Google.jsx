@@ -17,12 +17,16 @@ const Google = ({ setError, onClose, toast = () => "" }) => {
       google.accounts.id.initialize({
         client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
         callback: handleCredentialResponse,
+        auto_select: false, //disables auto selects on previous login/signup
       });
 
       google.accounts.id.renderButton(document.getElementById("googleBtn"), {
+        type: "standard",
         theme: "outline",
         size: "large",
         text: "continue_with",
+        width: "400px",
+        logo_alignment: "center",
       });
     } catch (err) {
       setError(err);
