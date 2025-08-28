@@ -28,10 +28,9 @@ const Google = ({ setError, onClose, toast = () => "" }) => {
         logo_alignment: "center",
       });
 
-      // Disable auto-select explicitly on mount or after logout
-      if (window.google && window.google.accounts) {
-        window.google.accounts.id.disableAutoSelect();
-      }
+      setTimeout(() => {
+        window?.google?.accounts?.id?.disableAutoSelect();
+      }, 500);
     } catch (err) {
       setError(err);
     }
