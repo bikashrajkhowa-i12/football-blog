@@ -25,9 +25,13 @@ const Google = ({ setError, onClose, toast = () => "" }) => {
         theme: "outline",
         size: "large",
         text: "continue_with",
-        width: "400px",
         logo_alignment: "center",
       });
+
+      // Disable auto-select explicitly on mount or after logout
+      if (window.google && window.google.accounts) {
+        window.google.accounts.id.disableAutoSelect();
+      }
     } catch (err) {
       setError(err);
     }
